@@ -1,5 +1,6 @@
 import React from 'react';
 import FeedbackList from './FeedbackList';
+import GroupsFilter from './GroupsFilter';
 import CreateGroup from './CreateGroup';
 import Nav from './Nav';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
@@ -20,6 +21,7 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div>
+				<GroupsFilter groups={this.state.groups} />
 				<FeedbackList feedback={this.state.feedback} fetchFeedback={this.fetchFeedback} showFeedbackDetail={this.showFeedbackDetail}/>	
 			</div>
 		)
