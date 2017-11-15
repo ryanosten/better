@@ -16,6 +16,14 @@ app.get('/', (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
 
+app.get('/groups', (req, res, next) => {
+	res.sendFile(path.join(__dirname, 'index.html'));
+})
+
+app.get('/feedback/*', (req, res, next) => {
+	res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.get('/api/feedback', (req, res, next) => {
 	Feedback.find()
 		.then((docs) => {
@@ -28,6 +36,16 @@ app.get('/api/feedback', (req, res, next) => {
 
 app.get('/api/groups', (req, res, next) => {
 	Group.find()
+		.then((docs) => {
+			res.status(200).send(docs);
+		})
+		.catch((err) => {
+			res.status(400).send(err);
+		})
+})
+
+app.get('/api/feedback/:feedbackId', (req, res, next) => {
+	Feedback.findOne({ '_id': req.params.feedbackId})
 		.then((docs) => {
 			res.status(200).send(docs);
 		})
