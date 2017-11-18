@@ -20,6 +20,10 @@ app.get('/groups', (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
 
+app.get('/feedback/create', (req, res, next) => {
+	res.sendFile(path.join(__dirname, 'index.html'));
+})
+
 app.get('/feedback/*', (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 });

@@ -9,45 +9,43 @@ class Home extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			feedback: [],
 			user_id: '',
-			groups: []
+			groupList: [],
+			feedbackList:[],
+			selectedGroup:[]
 		}
-		this.fetchFeedback = this.fetchFeedback.bind(this);
-		this.fetchGroups = this.fetchGroups.bind(this);
+		this.handleFetchFeedback = this.handleFetchFeedback.bind(this);
+		// this.fetchGroups = this.fetchGroups.bind(this);
+		this.handleFetchGroups = this.handleFetchGroups.bind(this);
+		this.handleSelectGroup = this.handleSelectGroup.bind(this);
 
 	};
+
+	handleSelectGroup(selectedGroup) {
+		this.setState({ selectedGroup });
+	}
+
+	handleFetchGroups(groupList) {
+		this.setState({ groupList });
+	}
+
+	handleFetchFeedback(feedbackList) {
+		this.setState({ feedbackList })
+	}
 
 	render() {
 		return (
 			<div>
-				<GroupSelect groups={this.state.groups} />
-				<FeedbackList feedback={this.state.feedback} fetchFeedback={this.fetchFeedback} showFeedbackDetail={this.showFeedbackDetail}/>	
+				<GroupSelect onSelectGroup={this.handleSelectGroup} onFetchGroups={this.handleFetchGroups} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
+				<FeedbackList onFetchFeedback={this.handleFetchFeedback }groupName={this.state.groupName} onGroupChange={this.onGroupChange} feedbackList={this.state.feedbackList}/>	
 			</div>
 		)
 	};
 
-	componentDidMount() { 
-		this.fetchFeedback();
-		this.fetchGroups();
-	}
-
-	fetchFeedback() {
-		fetch('/api/feedback')
-			.then(res => res.json())
-			.then(json => this.setState({ feedback: json }));
-	}
-
-	fetchGroups() {
-		fetch('/api/groups')
-			.then(res => res.json())
-			.then(json => this.setState({ groups: json })) //how does it know to push json into the groups array		
-	}
-
-	showFeedbackDetail() {
-		console.log('its clicking!')
-
-	}
+	// componentDidMount() { 
+	// 	this.fetchFeedback();
+	// 	this.fetchGroups();
+	// }
 };
 
 export default Home;

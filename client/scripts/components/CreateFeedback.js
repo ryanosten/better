@@ -5,6 +5,7 @@ class CreateFeedback extends React.Component {
 		super();
 		this.state = {
 			content: '',
+			group: 'sales'
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
