@@ -16,6 +16,9 @@ const Nav = () => {
 					<li className="nav-item">
 						<Link to={'/groups'} className="nav-link">Users</Link>
 					</li>
+					<li className="nav-item">
+						<Link to={'/generate-link'} className="nav-link">Generate Link</Link>
+					</li>
 				</ul>
 			</div>
 		</nav>

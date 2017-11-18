@@ -24,6 +24,10 @@ app.get('/feedback/*', (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/generate-link', (req, resq, next) => {
+	res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.get('/api/feedback', (req, res, next) => {
 	Feedback.find()
 		.then((docs) => {

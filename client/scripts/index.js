@@ -7,6 +7,8 @@ import Nav from './components/Nav';
 import Groups from './components/Groups';
 import CreateGroup from './components/CreateGroup';
 import FeedbackDetail from './components/FeedbackDetail';
+import CreateFeedback from './components/CreateFeedback';
+import GenerateLink from './components/GenerateLink'
 
 
 const Root = () => {
@@ -18,12 +20,12 @@ const Root = () => {
 				<Route exact={true} path='/groups' component={Groups} />
 				<Route exact={true} path='/groups/create' component={CreateGroup} />
 				<Route exact={true} path='/feedback/:feedbackId' component={FeedbackDetail} />
+				<Route exact={true} path='/feedback/create/:feedbackId' component={CreateFeedback} />
+				<Route exact={true} path='/generate-link' component={GenerateLink}></Route>
 			</div>
 		</Router> 
 	)
 }
 
 render(<Root/>, document.getElementById('app'));
-
-///* why closing tag on </BrowserRouter?, other components self-closing?*/
 

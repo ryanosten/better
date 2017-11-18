@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 
 import CreateGroup from './CreateGroup';
-import GroupsList from './GroupsList';
+import GroupList from './GroupList';
 
 class Groups extends React.Component {
 	constructor() {
@@ -28,7 +28,7 @@ class Groups extends React.Component {
 			<div>
 				<h1>Groups</h1>
 				<ul>
-					<GroupsList groups={this.state.groups} />
+					<GroupList groups={this.state.groups} />
 				</ul>
 				<Link to='/groups/create'>
 					<button>Add Group</button>

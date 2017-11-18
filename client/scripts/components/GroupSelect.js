@@ -1,6 +1,6 @@
 import React from 'react'
 
-const GroupsFilter = (props) => {
+const GroupSelect = (props) => {
 	return (
 		<div>
 			<h1>Groups</h1>
@@ -12,4 +12,4 @@ const GroupsFilter = (props) => {
 	)
 }
 
-export default GroupsFilter;
+export default GroupSelect;

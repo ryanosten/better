@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GroupsList = (props) => {
+const GroupList = (props) => {
 	return(
 		<ul>
 			{props.groups.map(group => <li key={group._id}>{group.groupName}</li>)}
@@ -8,4 +8,4 @@ const GroupsList = (props) => {
 	)
 }
 
-export default GroupsList;
+export default GroupList;
