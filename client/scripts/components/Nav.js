@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+import GenerateLink from './GenerateLink';
 
 const Nav = () => {
 	return (
@@ -17,7 +19,7 @@ const Nav = () => {
 						<Link to={'/groups'} className="nav-link">Users</Link>
 					</li>
 					<li className="nav-item">
-						<Link to={'/generate-link'} className="nav-link">Generate Link</Link>
+						<GenerateLink />
 					</li>
 				</ul>
 			</div>

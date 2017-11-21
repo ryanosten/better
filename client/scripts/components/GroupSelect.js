@@ -8,8 +8,6 @@ class GroupSelect extends React.Component {
 		this.handleSelectGroup = this.handleSelectGroup.bind(this);
 	}
 
-	//still need to hanlde initialization to 'all'
-
 	fetchGroups() {
 		fetch('/api/groups')
 			.then(res => res.json())
@@ -25,7 +23,7 @@ class GroupSelect extends React.Component {
 	}
 
 	handleSelectGroup(e){
-		let selectedGroup = [];
+		let selectedGroup;
 
 		if (e.target.value === 'all') {
 			selectedGroup = null;
@@ -36,7 +34,6 @@ class GroupSelect extends React.Component {
 		this.props.updateSelectedGroup(selectedGroup);
 	}
 
-	//Note - might want to set select menu selected value from state
 	render() {		
 
 		return (

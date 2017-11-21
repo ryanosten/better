@@ -23,7 +23,6 @@ class Home extends React.Component {
 
 	updateSelectedGroup(selectedGroup) {
 		this.setState({ selectedGroup });
-		//I had to use selected group as an arg passed to filter feedback, bc I couldnt get from state, this.state.selectedGroup always displayed empty array
 	}
 
 	initializeGroupList(groupList) {
@@ -35,16 +34,15 @@ class Home extends React.Component {
 	}
 
 	filterFeedback() {
-		var selectedGroup = this.state.selectedGroup;
-		var feedbackList = this.state.feedbackList;
+		const selectedGroup = this.state.selectedGroup;
+		const feedbackList = this.state.feedbackList;
 		if (selectedGroup === null) {
 			return feedbackList;
 		}
 
-		console.log(selectedGroup);
-		console.log(feedbackList);
-		const selectedGroupIds = selectedGroup.map(item => item._id)
-		const filteredFeedbackList = feedbackList.filter(item => selectedGroupIds.includes(item.groupId));
+		const selectedGroupId = selectedGroup.map(item => item._id)
+		const filteredFeedbackList = feedbackList.filter(item => selectedGroupId.includes(item.groupId));
+		
 		return filteredFeedbackList;
 	}
 
