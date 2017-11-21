@@ -5,7 +5,8 @@ class CreateFeedback extends React.Component {
 		super();
 		this.state = {
 			content: '',
-			group: 'sales'
+			groupId: '5a08cd68732a5d80f7c27951',
+			groupName: 'sales'
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -21,8 +22,6 @@ class CreateFeedback extends React.Component {
 		e.preventDefault();
 		
 		const feedbackItem = Object.assign({}, this.state)
-		
-		console.log(feedbackItem);
 		
 		fetch('/api/feedback/create', {
 			method: 'POST',

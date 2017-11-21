@@ -12,25 +12,25 @@ mongoose.connect('mongodb://localhost/better');
 
 app.use(express.static('public'))
 
-app.get('/', (req, res, next) => {
-	res.sendFile(path.join(__dirname, 'index.html'));
-})
+// app.get('/', (req, res, next) => {
+// 	res.sendFile(path.join(__dirname, 'index.html'));
+// })
 
-app.get('/groups', (req, res, next) => {
-	res.sendFile(path.join(__dirname, 'index.html'));
-})
+// app.get('/groups', (req, res, next) => {
+// 	res.sendFile(path.join(__dirname, 'index.html'));
+// })
 
-app.get('/feedback/create', (req, res, next) => {
-	res.sendFile(path.join(__dirname, 'index.html'));
-})
+// app.get('/feedback/create', (req, res, next) => {
+// 	res.sendFile(path.join(__dirname, 'index.html'));
+// })
 
-app.get('/feedback/*', (req, res, next) => {
-	res.sendFile(path.join(__dirname, 'index.html'));
-});
+// app.get('/feedback/*', (req, res, next) => {
+// 	res.sendFile(path.join(__dirname, 'index.html'));
+// });
 
-app.get('/generate-link', (req, resq, next) => {
-	res.sendFile(path.join(__dirname, 'index.html'));
-});
+// app.get('/generate-link', (req, resq, next) => {
+// 	res.sendFile(path.join(__dirname, 'index.html'));
+// });
 
 app.get('/api/feedback', (req, res, next) => {
 	Feedback.find()
@@ -88,6 +88,10 @@ app.post('/api/groups/create', (req, res, next) => {
 		.catch((err) => {
 			res.status(500).send(err);
 		})
+})
+
+app.get('*', (req, res, next) => {
+	res.sendFile(path.join(__dirname, 'index.html'));
 })
 
 app.listen(8080, function() {

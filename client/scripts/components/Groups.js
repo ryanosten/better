@@ -16,7 +16,7 @@ class Groups extends React.Component {
 	fetchGroups() {
 		fetch('/api/groups')
 			.then(res => res.json())
-			.then(json => this.setState({ groups: json })) //how does it know to push json into the groups array		
+			.then(json => this.setState({ groups: json })) 		
 	}
 
 	componentDidMount() {

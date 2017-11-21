@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const FeedbackSchema = new mongoose.Schema({
 	author: String, 
 	createdAt: Date, 
-	group: String,
+	groupName: String,
+	groupId: String,
 	content: String,
 	resolved: Boolean,
 });

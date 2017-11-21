@@ -16,12 +16,12 @@ const Root = () => {
 		<Router>
 			<div>
 				<Nav />
-				<Route exact={true} path='/' component={Home} />
-				<Route exact={true} path='/groups' component={Groups} />
-				<Route exact={true} path='/groups/create' component={CreateGroup} />
-				<Route exact={true} path='/feedback/:feedbackId' component={FeedbackDetail} />
-				<Route exact={true} path='/feedback/create' component={CreateFeedback} />
-				<Route exact={true} path='/generate-link' component={GenerateLink}></Route>
+				<Route exact path='/' component={Home} />
+				<Route exact path='/groups' component={Groups} />
+				<Route exact path='/groups/create' component={CreateGroup} />
+				<Route exact path='/feedback/:feedbackId' component={FeedbackDetail} />
+				<Route exact path='/feedback/create' component={CreateFeedback} />
+				<Route exact path='/generate-link' component={GenerateLink}></Route>
 			</div>
 		</Router> 
 	)

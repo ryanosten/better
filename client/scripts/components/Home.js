@@ -12,40 +12,59 @@ class Home extends React.Component {
 			user_id: '',
 			groupList: [],
 			feedbackList:[],
-			selectedGroup:[]
+			selectedGroup:null
 		}
-		this.handleFetchFeedback = this.handleFetchFeedback.bind(this);
-		// this.fetchGroups = this.fetchGroups.bind(this);
-		this.handleFetchGroups = this.handleFetchGroups.bind(this);
-		this.handleSelectGroup = this.handleSelectGroup.bind(this);
+		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
+		this.filterFeedback = this.filterFeedback.bind(this);
+		this.initializeGroupList = this.initializeGroupList.bind(this);
+		this.updateSelectedGroup = this.updateSelectedGroup.bind(this);
 
 	};
 
-	handleSelectGroup(selectedGroup) {
+	updateSelectedGroup(selectedGroup) {
 		this.setState({ selectedGroup });
+		//I had to use selected group as an arg passed to filter feedback, bc I couldnt get from state, this.state.selectedGroup always displayed empty array
 	}
 
-	handleFetchGroups(groupList) {
+	initializeGroupList(groupList) {
 		this.setState({ groupList });
 	}
 
-	handleFetchFeedback(feedbackList) {
+	initializeFeedbackList(feedbackList) {
 		this.setState({ feedbackList })
 	}
 
+	filterFeedback() {
+		var selectedGroup = this.state.selectedGroup;
+		var feedbackList = this.state.feedbackList;
+		if (selectedGroup === null) {
+			return feedbackList;
+		}
+
+		console.log(selectedGroup);
+		console.log(feedbackList);
+		const selectedGroupIds = selectedGroup.map(item => item._id)
+		const filteredFeedbackList = feedbackList.filter(item => selectedGroupIds.includes(item.groupId));
+		return filteredFeedbackList;
+	}
+
+	// filterFeedback(selectedGroup) {
+	// 	console.log(selectedGroup);
+	// 	const selectedGroupIds = selectedGroup.map(item => item._id)
+	// 	const filteredFeedbackList = this.state.feedbackList.filter(item => selectedGroupIds.includes(item.groupId));
+	// 	this.setState({ feedbackList: filteredFeedbackList});
+	// }
+
 	render() {
+		const feedback = this.filterFeedback();
+
 		return (
 			<div>
-				<GroupSelect onSelectGroup={this.handleSelectGroup} onFetchGroups={this.handleFetchGroups} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
-				<FeedbackList onFetchFeedback={this.handleFetchFeedback }groupName={this.state.groupName} onGroupChange={this.onGroupChange} feedbackList={this.state.feedbackList}/>	
+				<GroupSelect updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
+				<FeedbackList initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
 			</div>
 		)
 	};
-
-	// componentDidMount() { 
-	// 	this.fetchFeedback();
-	// 	this.fetchGroups();
-	// }
 };
 
 export default Home;

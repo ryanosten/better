@@ -19,7 +19,7 @@ class FeedbackList extends React.Component {
 	}
 
 	handleFetchFeedback(feedbackList) {
-		this.props.onFetchFeedback(feedbackList)
+		this.props.initializeFeedbackList(feedbackList)
 	}
 
 	render() {
