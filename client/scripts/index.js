@@ -20,7 +20,7 @@ const Root = () => {
 				<Route exact path='/groups' component={Groups} />
 				<Route exact path='/groups/create' component={CreateGroup} />
 				<Route exact path='/feedback/:feedbackId' component={FeedbackDetail} />
-				<Route exact path='/feedback/create' component={CreateFeedback} />
+				<Route exact path='/feedback/create/:groupId' component={CreateFeedback} />
 				<Route exact path='/generate-link' component={GenerateLink}></Route>
 			</div>
 		</Router> 

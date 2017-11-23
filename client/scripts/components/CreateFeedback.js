@@ -1,8 +1,9 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 class CreateFeedback extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			content: '',
 			groupId: '5a08cd68732a5d80f7c27951',
@@ -23,14 +24,17 @@ class CreateFeedback extends React.Component {
 		
 		const feedbackItem = Object.assign({}, this.state)
 		
-		fetch('/api/feedback/create', {
+		fetch(`/api/feedback/create/${this.props.match.params.groupId}`, {
 			method: 'POST',
 			body: JSON.stringify(feedbackItem),
 			headers: {
 				'Content-Type': 'application/json'
 			}
+		}).then(res => {
+			return res.json()
+		}).then(json => {
+			window.location = `/feedback/${json._id}`;
 		})
-		//when submit feedback, write to database, then database will pass down to state
 	}
 
 	render() {

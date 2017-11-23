@@ -62,10 +62,15 @@ app.get('/api/feedback/:feedbackId', (req, res, next) => {
 		})
 })
 
-app.post('/api/feedback/create', (req, res, next) => {
+app.post('/api/feedback/create/:groupId', (req, res, next) => {
 	const feedbackModel = new Feedback();
 
 	const feedback = Object.assign(feedbackModel, req.body);
+
+	console.log(feedback._id);
+	const feedbackId = feedback._id;
+
+	feedback.set({ groupId: req.params.groupId });
 	
 	feedback.save()
 		.then((doc) => {
@@ -74,6 +79,9 @@ app.post('/api/feedback/create', (req, res, next) => {
 		.catch((err) => {
 			res.status(500).send(err);
 		})
+		// .then(() => {
+		// 	res.status(200).send(feedbackId);
+		// })
 });
 
 app.post('/api/groups/create', (req, res, next) => {
