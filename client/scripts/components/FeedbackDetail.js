@@ -16,7 +16,7 @@ class FeedbackDetail extends React.Component {
 
 	render(){
 		return (
-			<div>
+			<div className="fb-headline">
 				<h1>Feedback</h1>
 				<p>{this.state.content}</p>
 			</div>

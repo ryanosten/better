@@ -15,7 +15,7 @@ class CreateFeedback extends React.Component {
 
 	handleChange(e) {
 		this.setState({
-			[e.target.name]: e.target.value, //why do I need square brackets around key? //how can I reuse handlechange?
+			[e.target.name]: e.target.value, 
 		});
 	}
 
@@ -33,7 +33,19 @@ class CreateFeedback extends React.Component {
 		}).then(res => {
 			return res.json()
 		}).then(json => {
-			window.location = `/feedback/${json._id}`;
+			this.props.history.push(`/feedback/${json._id}`);
+
+			//create an alert
+			let successAlert = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>"
+						successAlert += "<strong>Feedback successfully created!</strong>"
+			  		successAlert += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
+			    	successAlert += "<span aria-hidden='true'>&times;</span></button></div>"
+
+			$('.fb-headline').prepend(successAlert);
+
+			setTimeout(function() {
+				$('.alert').remove()
+			}, 3000)
 		})
 	}
 
