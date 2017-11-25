@@ -12,26 +12,6 @@ mongoose.connect('mongodb://localhost/better');
 
 app.use(express.static('public'))
 
-// app.get('/', (req, res, next) => {
-// 	res.sendFile(path.join(__dirname, 'index.html'));
-// })
-
-// app.get('/groups', (req, res, next) => {
-// 	res.sendFile(path.join(__dirname, 'index.html'));
-// })
-
-// app.get('/feedback/create', (req, res, next) => {
-// 	res.sendFile(path.join(__dirname, 'index.html'));
-// })
-
-// app.get('/feedback/*', (req, res, next) => {
-// 	res.sendFile(path.join(__dirname, 'index.html'));
-// });
-
-// app.get('/generate-link', (req, resq, next) => {
-// 	res.sendFile(path.join(__dirname, 'index.html'));
-// });
-
 app.get('/api/feedback', (req, res, next) => {
 	Feedback.find()
 		.then((docs) => {
@@ -78,10 +58,7 @@ app.post('/api/feedback/create/:groupId', (req, res, next) => {
 		})
 		.catch((err) => {
 			res.status(500).send(err);
-		})
-		// .then(() => {
-		// 	res.status(200).send(feedbackId);
-		// })
+	})
 });
 
 app.post('/api/groups/create', (req, res, next) => {
@@ -98,6 +75,26 @@ app.post('/api/groups/create', (req, res, next) => {
 		})
 })
 
+app.post('/api/comment/create/:feedbackId', (req, res, next) => {
+	const comment = {
+		authorId: req.body.authorId, 
+		createdAt: req.body.createdAt, 
+		content: req.body.content
+	}
+	
+	const feedbackId = req.params.feedbackId;
+
+	console.log(feedbackId);
+	console.log(comment);
+
+	Feedback.findOneAndUpdate({ '_id': req.params.feedbackId}, {$push: {comments: comment }})
+		.then((doc) => {
+			res.status(200).send(doc);
+		})
+		.catch((err) => {
+			res.status(500).send(err)
+		})
+});
 app.get('*', (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })

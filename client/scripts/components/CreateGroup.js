@@ -32,7 +32,21 @@ class CreateGroup extends React.Component {
 			headers: {
 				'Content-Type': 'application/json'
 			}
+		}).then(res => { 
+			this.props.history.push('/groups')
+			
+			let successAlert = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>"
+						successAlert += "<strong>Group successfully created!</strong>"
+			  		successAlert += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
+			    	successAlert += "<span aria-hidden='true'>&times;</span></button></div>"
+
+			$('.group-headline').prepend(successAlert);
+
+			setTimeout(function() {
+				$('.alert').remove()
+			}, 3000)
 		})
+
 	}
 
 	render(){

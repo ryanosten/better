@@ -25,7 +25,7 @@ class Groups extends React.Component {
 
 	render() {
 		return(
-			<div>
+			<div className="group-headline">
 				<h1>Groups</h1>
 				<ul>
 					<GroupList groups={this.state.groups} />

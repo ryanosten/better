@@ -57,7 +57,7 @@ class Home extends React.Component {
 		const feedback = this.filterFeedback();
 
 		return (
-			<div>
+			<div className="home-container">
 				<GroupSelect updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
 				<FeedbackList initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
 			</div>

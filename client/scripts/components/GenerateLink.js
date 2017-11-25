@@ -63,9 +63,9 @@ class GenerateLink extends React.Component {
 				        <select onChange={this.handleSelectGroup}>
 									{this.state.groupList.map(group => <option key={group._id} value={group.groupName}>{group.groupName}</option>)}
 								</select>
+								<span>{this.state.link}</span>
 				      </div>
-				      <div className="modal-footer">
-				      	<span>{this.state.link}</span>
+				      <div className="modal-footer gen-link">
 				        <button type="button" className="btn btn-primary" onClick={this.genLink}>Get Link</button>
 				      </div>
 				    </div>

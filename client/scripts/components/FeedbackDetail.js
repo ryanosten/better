@@ -1,4 +1,5 @@
 import React from 'react';
+import Comments from './Comments';
 
 //explain match here, can I pass more than just the param from route?
 class FeedbackDetail extends React.Component {
@@ -8,7 +9,18 @@ class FeedbackDetail extends React.Component {
 			created_at: '',
 			author: '',
 			content: '',
-			comments: [],
+			comments: [
+				{
+					commentId: '',
+					author: '',
+					content: 'comment number 1'
+				},
+				{
+					commentId: '',
+					author: '',
+					content: 'comment number 2'
+				}
+			],
 		}
 
 		this.fetchFeedbackDetail = this.fetchFeedbackDetail.bind(this);
@@ -19,6 +31,7 @@ class FeedbackDetail extends React.Component {
 			<div className="fb-headline">
 				<h1>Feedback</h1>
 				<p>{this.state.content}</p>
+				<Comments comments={this.state.comments} feedbackId={this.props.match.params.feedbackId}/>
 			</div>
 		)
 	}

@@ -6,8 +6,9 @@ class CreateFeedback extends React.Component {
 		super(props);
 		this.state = {
 			content: '',
-			groupId: '5a08cd68732a5d80f7c27951',
-			groupName: 'sales'
+			groupId: this.props.match.params.groupId,
+			author: '',
+			createdAt: Date.now(),
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -23,6 +24,8 @@ class CreateFeedback extends React.Component {
 		e.preventDefault();
 		
 		const feedbackItem = Object.assign({}, this.state)
+
+		feedbackItem.createdAt = Date.now(); 
 		
 		fetch(`/api/feedback/create/${this.props.match.params.groupId}`, {
 			method: 'POST',
