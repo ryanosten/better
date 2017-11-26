@@ -1,6 +1,6 @@
 import React from 'react';
 
-class NewComment extends React.Component {
+class CreateComment extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -21,12 +21,15 @@ class NewComment extends React.Component {
 
 		commentItem.createdAt = Date.now();
 		
-		fetch(`/api/comment/create/${this.props.feedbackId}`, {
+		fetch(`/api/comments/create/${this.props.feedbackId}`, {
 			method: 'POST',
 			body: JSON.stringify(commentItem),
 			headers: {
 				'Content-Type': 'application/json'
 			}
+		}).then(res => {
+			this.props.fetchComments();
+			this.setState({ content: '' })
 		})
 	}
 
@@ -40,11 +43,11 @@ class NewComment extends React.Component {
 		return(
 			<form onSubmit={this.handleSubmit}>
 				<input type="text" onChange={this.handleChange} name='content' value={this.state.content}/>
-				<button type="submit">submit</button>
+				<button type="submit">comment</button>
 			</form>
 		)
 	}
 }
 
-export default NewComment;
+export default CreateComment;
 

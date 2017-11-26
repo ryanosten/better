@@ -1,13 +1,13 @@
 import React from 'react';
 import CommentItem from './CommentItem.js'
-import NewComment from './NewComment.js'
+import CreateComment from './CreateComment.js'
 
 const Comments = (props) => {
 		
 	return(
 		<div>
-			{props.comments.map(item => <CommentItem key={item.content} content={item.content} />)}
-			<NewComment feedbackId={props.feedbackId}/>
+			{props.comments.map(item => <CommentItem key={item._id} content={item.content} />)}
+			<CreateComment feedbackId={props.feedbackId} fetchComments={props.fetchComments}/>
 		</div>
 	)
 }

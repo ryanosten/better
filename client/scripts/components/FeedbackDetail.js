@@ -9,21 +9,11 @@ class FeedbackDetail extends React.Component {
 			created_at: '',
 			author: '',
 			content: '',
-			comments: [
-				{
-					commentId: '',
-					author: '',
-					content: 'comment number 1'
-				},
-				{
-					commentId: '',
-					author: '',
-					content: 'comment number 2'
-				}
-			],
+			comments: [],
 		}
 
 		this.fetchFeedbackDetail = this.fetchFeedbackDetail.bind(this);
+		this.fetchComments = this.fetchComments.bind(this);
 	}
 
 	render(){
@@ -31,13 +21,15 @@ class FeedbackDetail extends React.Component {
 			<div className="fb-headline">
 				<h1>Feedback</h1>
 				<p>{this.state.content}</p>
-				<Comments comments={this.state.comments} feedbackId={this.props.match.params.feedbackId}/>
+				<h5>Comments</h5>
+				<Comments comments={this.state.comments} feedbackId={this.props.match.params.feedbackId} fetchComments={this.fetchComments}/>
 			</div>
 		)
 	}
 
 	componentDidMount() {
 		this.fetchFeedbackDetail();
+		this.fetchComments();
 	}
 
 	fetchFeedbackDetail() {
@@ -47,6 +39,15 @@ class FeedbackDetail extends React.Component {
 				const content = json.content;
 				this.setState({ content })
 				})
+	}
+
+	fetchComments() {
+		fetch(`/api/comments/${this.props.match.params.feedbackId}`)
+			.then(res => res.json())
+			.then(json => {
+				const comments = json.comments
+				this.setState({ comments })
+			})
 	}
 }
 

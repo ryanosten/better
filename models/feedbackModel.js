@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
 
+const CommentSchema = new mongoose.Schema({
+	authorId: String,
+	createdAt: Date,
+	content: String
+});
+
 const FeedbackSchema = new mongoose.Schema({
-	author: String, 
+	authorId: String, 
 	createdAt: Date, 
 	groupId: String,
 	content: String,
 	resolved: Boolean,
-	comments: [{
-		authorId: String,
-		createdAt: Date,
-		content: ''
-	}],
+	comments: [CommentSchema],
 });
+
 
 module.exports = mongoose.model('Feedback', FeedbackSchema);

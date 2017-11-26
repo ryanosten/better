@@ -75,7 +75,7 @@ app.post('/api/groups/create', (req, res, next) => {
 		})
 })
 
-app.post('/api/comment/create/:feedbackId', (req, res, next) => {
+app.post('/api/comments/create/:feedbackId', (req, res, next) => {
 	const comment = {
 		authorId: req.body.authorId, 
 		createdAt: req.body.createdAt, 
@@ -83,9 +83,6 @@ app.post('/api/comment/create/:feedbackId', (req, res, next) => {
 	}
 	
 	const feedbackId = req.params.feedbackId;
-
-	console.log(feedbackId);
-	console.log(comment);
 
 	Feedback.findOneAndUpdate({ '_id': req.params.feedbackId}, {$push: {comments: comment }})
 		.then((doc) => {
@@ -95,6 +92,19 @@ app.post('/api/comment/create/:feedbackId', (req, res, next) => {
 			res.status(500).send(err)
 		})
 });
+
+app.get('/api/comments/:feedbackId', (req, res, next) => {
+	Feedback.findOne({ '_id': req.params.feedbackId })
+		.then((doc) => {
+			const comments = doc.comments;
+			res.status(200).send(doc)
+		})
+		.catch((err) => {
+			res.status(500).send(err);
+		})
+
+})
+
 app.get('*', (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
