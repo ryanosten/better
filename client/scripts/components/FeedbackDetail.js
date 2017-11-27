@@ -6,7 +6,7 @@ class FeedbackDetail extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			created_at: '',
+			createdAt: '',
 			author: '',
 			content: '',
 			comments: [],
@@ -36,8 +36,11 @@ class FeedbackDetail extends React.Component {
 		fetch(`/api/feedback/${this.props.match.params.feedbackId}`)
 			.then(res => res.json())
 			.then(json => {
+				console.log(json);
 				const content = json.content;
+				const createdAt = json.createdAt;
 				this.setState({ content })
+				this.setState({ createdAt });
 				})
 	}
 

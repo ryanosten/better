@@ -3,21 +3,23 @@ import FeedbackList from './FeedbackList';
 import GroupSelect from './GroupSelect';
 import CreateGroup from './CreateGroup';
 import Nav from './Nav';
+import Login from './Login';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 class Home extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			user_id: '',
+			user: null,
 			groupList: [],
 			feedbackList:[],
-			selectedGroup:null
+			selectedGroup: null
 		}
 		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
 		this.filterFeedback = this.filterFeedback.bind(this);
 		this.initializeGroupList = this.initializeGroupList.bind(this);
 		this.updateSelectedGroup = this.updateSelectedGroup.bind(this);
+		this.userLoggedIn = this.userLoggedIn.bind(this);
 
 	};
 
@@ -46,22 +48,35 @@ class Home extends React.Component {
 		return filteredFeedbackList;
 	}
 
-	// filterFeedback(selectedGroup) {
-	// 	console.log(selectedGroup);
-	// 	const selectedGroupIds = selectedGroup.map(item => item._id)
-	// 	const filteredFeedbackList = this.state.feedbackList.filter(item => selectedGroupIds.includes(item.groupId));
-	// 	this.setState({ feedbackList: filteredFeedbackList});
-	// }
+	componentDidMount() {
+		fetch('/api/me')
+			.then(res => res.json)
+			.then((user) => {
+				if(user =! null) {
+					this.userLoggedIn(user)
+			}
+		})
+	}
+
+	userLoggedIn(user) {
+		this.setState({ user }, this.refresh)
+	}
+
 
 	render() {
-		const feedback = this.filterFeedback();
+		if(this.state.user) {
 
-		return (
-			<div className="home-container">
-				<GroupSelect updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
-				<FeedbackList initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
-			</div>
-		)
+			const feedback = this.filterFeedback();
+
+			return (
+				<div className="home-container">
+					<GroupSelect updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
+					<FeedbackList initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
+				</div>
+			)
+		} else {
+			return <Login onLogin={this.userLoggedIn} />
+		}		
 	};
 };
 

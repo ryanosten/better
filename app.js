@@ -2,15 +2,65 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+
+const requireLogin = require('./require_login')
 
 const app = express();
+
 const Feedback = require('./models/feedbackModel.js');
 const Group = require('./models/groupModel.js');
+const User = require('./models/userModel.js');
 
-app.use(bodyParser.json());
 mongoose.connect('mongodb://localhost/better');
 
-app.use(express.static('public'))
+app.use(express.static('public'));
+app.use(bodyParser.json());
+
+passport.use(User.createStrategy());
+app.use(session({ secret: 'fugglebuggle', resave: false, saveUninitialized: true }))
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.post('/api/login', passport.authenticate('local'), (req, res) => {
+	res.send(req.user);
+});
+
+app.post('/api/signup', (req, res, next) => {
+	const user = new User();
+	user.email = req.body.email;
+	user.username = req.body.username;
+	user.createdAt = new Date();
+
+	User.register(user, req.body.password, (err) => {
+		if (err) {
+			return res.send(err)
+		}
+
+		req.login(user, (err) => {
+			if(err) {
+				return res.send(err)
+			}
+			return res.send(user)
+		})
+	})
+});
+
+app.get('/api/logout', (req, res) => {
+	req.logout();
+	res.json('USer has logged out');
+});
+
+app.get('/api/me', (req,res) => {
+  if (!req.user) {
+    res.status(200).send({ message: 'No user found.' });
+  } else {
+    res.json(req.user);
+  }
+});
 
 app.get('/api/feedback', (req, res, next) => {
 	Feedback.find()
@@ -22,7 +72,7 @@ app.get('/api/feedback', (req, res, next) => {
 		})
 })
 
-app.get('/api/groups', (req, res, next) => {
+app.get('/api/groups', requireLogin,  (req, res, next) => {
 	Group.find()
 		.then((docs) => {
 			res.status(200).send(docs);
@@ -42,15 +92,10 @@ app.get('/api/feedback/:feedbackId', (req, res, next) => {
 		})
 })
 
-app.post('/api/feedback/create/:groupId', (req, res, next) => {
+app.post('/api/feedback/create', requireLogin, (req, res, next) => {
 	const feedbackModel = new Feedback();
 
 	const feedback = Object.assign(feedbackModel, req.body);
-
-	console.log(feedback._id);
-	const feedbackId = feedback._id;
-
-	feedback.set({ groupId: req.params.groupId });
 	
 	feedback.save()
 		.then((doc) => {
@@ -61,7 +106,7 @@ app.post('/api/feedback/create/:groupId', (req, res, next) => {
 	})
 });
 
-app.post('/api/groups/create', (req, res, next) => {
+app.post('/api/groups/create', requireLogin, (req, res, next) => {
 	const groupModel = new Group();
 
 	const group = Object.assign(groupModel, req.body);
@@ -102,10 +147,9 @@ app.get('/api/comments/:feedbackId', (req, res, next) => {
 		.catch((err) => {
 			res.status(500).send(err);
 		})
-
 })
 
-app.get('*', (req, res, next) => {
+app.get('*', requireLogin, (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
 

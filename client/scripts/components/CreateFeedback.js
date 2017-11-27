@@ -27,7 +27,7 @@ class CreateFeedback extends React.Component {
 
 		feedbackItem.createdAt = Date.now(); 
 		
-		fetch(`/api/feedback/create/${this.props.match.params.groupId}`, {
+		fetch(`/api/feedback/create`, {
 			method: 'POST',
 			body: JSON.stringify(feedbackItem),
 			headers: {

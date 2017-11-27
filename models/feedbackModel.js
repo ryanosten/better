@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+require('./userModel')
+require('./groupModel')
 
 const CommentSchema = new mongoose.Schema({
 	authorId: String,
@@ -7,9 +9,15 @@ const CommentSchema = new mongoose.Schema({
 });
 
 const FeedbackSchema = new mongoose.Schema({
-	authorId: String, 
+	authorId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	}, 
 	createdAt: Date, 
-	groupId: String,
+	groupId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Group'
+	},
 	content: String,
 	resolved: Boolean,
 	comments: [CommentSchema],
