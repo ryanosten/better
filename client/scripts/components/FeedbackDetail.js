@@ -1,7 +1,6 @@
 import React from 'react';
 import Comments from './Comments';
 
-//explain match here, can I pass more than just the param from route?
 class FeedbackDetail extends React.Component {
 	constructor() {
 		super()
@@ -13,7 +12,7 @@ class FeedbackDetail extends React.Component {
 		}
 
 		this.fetchFeedbackDetail = this.fetchFeedbackDetail.bind(this);
-		this.fetchComments = this.fetchComments.bind(this);
+		// this.fetchComments = this.fetchComments.bind(this);
 	}
 
 	render(){
@@ -22,14 +21,14 @@ class FeedbackDetail extends React.Component {
 				<h1>Feedback</h1>
 				<p>{this.state.content}</p>
 				<h5>Comments</h5>
-				<Comments comments={this.state.comments} feedbackId={this.props.match.params.feedbackId} fetchComments={this.fetchComments}/>
+				<Comments comments={this.state.comments} feedbackId={this.props.match.params.feedbackId} fetchComments={this.fetchFeedbackDetail}/>
 			</div>
 		)
 	}
 
 	componentDidMount() {
 		this.fetchFeedbackDetail();
-		this.fetchComments();
+		// this.fetchComments();
 	}
 
 	fetchFeedbackDetail() {
@@ -39,19 +38,21 @@ class FeedbackDetail extends React.Component {
 				console.log(json);
 				const content = json.content;
 				const createdAt = json.createdAt;
-				this.setState({ content })
+				const comments = json.comments; 
+				this.setState({ content });
 				this.setState({ createdAt });
+				this.setState({ comments });
 				})
 	}
 
-	fetchComments() {
-		fetch(`/api/comments/${this.props.match.params.feedbackId}`)
-			.then(res => res.json())
-			.then(json => {
-				const comments = json.comments
-				this.setState({ comments })
-			})
-	}
+	// fetchComments() {
+	// 	fetch(`/api/comments/${this.props.match.params.feedbackId}`)
+	// 		.then(res => res.json())
+	// 		.then(json => {
+	// 			const comments = json.comments
+	// 			this.setState({ comments })
+	// 		})
+	// }
 }
 
 export default FeedbackDetail;

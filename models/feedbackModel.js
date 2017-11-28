@@ -3,18 +3,18 @@ require('./userModel')
 require('./groupModel')
 
 const CommentSchema = new mongoose.Schema({
-	authorId: String,
+	author: String,
 	createdAt: Date,
 	content: String
 });
 
 const FeedbackSchema = new mongoose.Schema({
-	authorId: {
+	author: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}, 
 	createdAt: Date, 
-	groupId: {
+	group: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Group'
 	},

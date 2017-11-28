@@ -13,7 +13,9 @@ const Feedback = require('./models/feedbackModel.js');
 const Group = require('./models/groupModel.js');
 const User = require('./models/userModel.js');
 
-mongoose.connect('mongodb://localhost/better');
+mongoose.connect('mongodb://localhost/better', {
+    useMongoClient: true,
+});
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -139,7 +141,7 @@ app.post('/api/comments/create/:feedbackId', (req, res, next) => {
 });
 
 app.get('/api/comments/:feedbackId', (req, res, next) => {
-	Feedback.findOne({ '_id': req.params.feedbackId })
+	Feedback.findOne({ '_id': req.params.feedbackId }).populate('comments.content').exec()
 		.then((doc) => {
 			const comments = doc.comments;
 			res.status(200).send(doc)

@@ -9,6 +9,7 @@ import CreateGroup from './components/CreateGroup';
 import FeedbackDetail from './components/FeedbackDetail';
 import CreateFeedback from './components/CreateFeedback';
 import GenerateLink from './components/GenerateLink'
+import Users from './components/Users';
 
 
 const Root = () => {
@@ -19,6 +20,7 @@ const Root = () => {
 				<Route exact path='/' component={Home} />
 				<Route exact path='/groups' component={Groups} />
 				<Route exact path='/groups/create' component={CreateGroup} />
+				<Route exact path='/users' component={Users} />
 				<Route exact path='/feedback/:feedbackId' component={FeedbackDetail} />
 				<Route exact path='/feedback/create/:groupId' component={CreateFeedback} />
 				<Route exact path='/generate-link' component={GenerateLink}></Route>

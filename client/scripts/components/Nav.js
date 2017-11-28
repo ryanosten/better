@@ -15,9 +15,9 @@ const Nav = () => {
 					<li className="nav-item">
 						<Link to={'/groups'} className="nav-link">Groups</Link>
 					</li>
-					{/*<li className="nav-item">
-						<Link to={'/groups'} className="nav-link">Users</Link>
-					</li>*/}
+					<li className="nav-item">
+						<Link to={'/users'} className="nav-link">Users</Link>
+					</li>
 					<li className="nav-item">
 						<GenerateLink />
 					</li>
