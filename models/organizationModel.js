@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('./userModel');
 
 const organizationSchema = mongoose.Schema({
 	owners: [{

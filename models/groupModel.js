@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 require('./userModel');
+require('./organizationModel');
 
 const GroupSchema = new mongoose.Schema({
 	createdAt: Date,

@@ -1,19 +1,40 @@
 import React from 'react';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content : {
+    top: '25%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '60%',
+    'max-width': '600px',
+    'min-width': '250px'
+  }
+};
+
 
 class GenerateLink extends React.Component {
 	
 	constructor() {
 		super();
 		this.state={
+			organization: 'hackeryou',
 			groupList: [],
 			selectedGroup: null,
-			link: ''
+			link: '',
+			modalIsOpen: false
 		}
 
 		this.fetchGroups = this.fetchGroups.bind(this);
 		this.handleSelectGroup = this.handleSelectGroup.bind(this);
 		this.genLink = this.genLink.bind(this);
 		this.clearLink = this.clearLink.bind(this);
+		this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
 	}
 
 	fetchGroups() {
@@ -29,11 +50,11 @@ class GenerateLink extends React.Component {
 		this.setState({ selectedGroup });
 	}
 
-	genLink(){
-		const link = `localhost:8080/feedback/create/${this.state.selectedGroup._id}`
+	genLink(e){
+		e.preventDefault();
+		const link = `localhost:8080/feedback/${this.state.organization}/${this.state.selectedGroup.name}`
 		this.setState({ link });
 		
-		// return link
 	}
 
 	clearLink(){
@@ -44,34 +65,43 @@ class GenerateLink extends React.Component {
 		this.fetchGroups();
 	}
 
+	openModal() {
+		this.clearLink();
+		this.setState({ modalIsOpen: true })
+	}
+
+	closeModal() {
+		this.setState({ modalIsOpen: false })
+	}
+	
+	afterOpenModal() {
+		//
+	}
+
 	render() {
 		//let link; wanted to not store link in state couldnt figure it out... tried to call genLink to return link and store in link this var
 
 		return (
 			<div>
-				<a className="nav-link" data-toggle="modal" data-target="#exampleModal" onClick={this.clearLink}>Generate Link</a>
-				<div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  <div className="modal-dialog" role="document">
-				    <div className="modal-content">
-				      <div className="modal-header">
-				        <h5 className="modal-title gen-link-title" id="exampleModalLabel">Select Group</h5>
-				         <select className="gen-link-group" onChange={this.handleSelectGroup}>
-									{this.state.groupList.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
-								</select>
-				        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				      </div>
-				      <div className="modal-body">
-				      	{this.state.link}
-				      </div>
-				      <div className="modal-footer gen-link">
-				        <button type="button" className="btn btn-primary" onClick={this.genLink}>Get Link</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-			</div>
+        <a className="nav-link" onClick={this.openModal}>Generate Link</a>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles}
+        >
+ 
+          <h4 ref={subtitle => this.subtitle = subtitle}>Select Group</h4>
+          <button type="button" className="close gen-link-close" onClick={this.closeModal}><span>&times;</span></button>
+          <select className="gen-link-group" onChange={this.handleSelectGroup}>
+						{this.state.groupList.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
+					</select>
+          <div className="link">{this.state.link}</div>
+          <form className="gen-link-form">
+            <button className="btn btn-primary gen-link-btn" onClick={this.genLink}>Get Link</button>
+          </form>
+        </Modal>
+      </div>
 		)
 	}
 }

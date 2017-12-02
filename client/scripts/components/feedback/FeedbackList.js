@@ -1,5 +1,5 @@
 import React from 'react';
-import FeedbackItem from './feedback/FeedbackItem';
+import FeedbackItem from './FeedbackItem';
 
 class FeedbackList extends React.Component {
 	constructor(props) {

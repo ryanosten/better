@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
+const fetch = require('node-fetch');
 
 const requireLogin = require('./require_login')
 
@@ -12,6 +13,7 @@ const app = express();
 const Feedback = require('./models/feedbackModel.js');
 const Group = require('./models/groupModel.js');
 const User = require('./models/userModel.js');
+const Organization = require('./models/organizationModel.js');
 
 mongoose.connect('mongodb://localhost/better', {
     useMongoClient: true,
@@ -75,7 +77,7 @@ app.get('/api/feedback', (req, res, next) => {
 })
 
 app.get('/api/groups', requireLogin,  (req, res, next) => {
-	Group.find()
+	Group.find().populate('organization').exec()
 		.then((docs) => {
 			res.status(200).send(docs);
 		})
@@ -83,6 +85,19 @@ app.get('/api/groups', requireLogin,  (req, res, next) => {
 			res.status(400).send(err);
 		})
 })
+
+// app.get('/api/:organization/:group', (req, res, next) => {
+// 	Organization.findOne({ 'name': req.params.organization })
+// 		.then((org => {
+// 			Group.findOne({ 'organization': org._id, 'group': req.params.group })
+// 		}))
+// 		.then((docs) => {
+// 			res.status(200).send(docs);
+// 		})
+// 		.catch((err) => {
+// 			res.status(400).send(err);
+// 		})
+// })
 
 app.get('/api/feedback/:feedbackId', (req, res, next) => {
 	Feedback.findOne({ '_id': req.params.feedbackId})
@@ -162,6 +177,28 @@ app.get('/feedback/create/:groupId', (req, res, next) => {
 		res.status(400).send('Sorry this page doesn\'t exist. Make sure you copied your link correctly!');
 	})
 })
+
+app.post('/api/feedback/create/:organization/:group', (req, res, next) => {
+	const feedbackModel = new Feedback();
+	const group = req.params.group;
+
+	Organization.findOne({ 'name': req.params.organization })
+		.then((org) => {
+			return Group.find({ $and:[ { 'organization': org._id}, { 'name': group } ]})      
+		})
+		.then((doc) => {
+			req.body.group = doc[0]._id
+			const feedback = Object.assign(feedbackModel, req.body);
+			feedback.save()
+			.then((docs) => {
+				res.status(200).send(docs)
+			})
+			.catch((err) => {
+				res.status(400).send(err);
+			})
+		})
+	})
+
 
 app.get('*', requireLogin, (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));

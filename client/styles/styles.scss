@@ -77,8 +77,9 @@ a:hover {
 	margin-top: 5px;
 }
 
-.modal-body {
+.link {
 	overflow-wrap: break-word;
+	margin-top: 10px;
 }
 
 .group-list {
@@ -99,4 +100,18 @@ a:hover {
 
 .comment-item {
 	margin-bottom: 10px
+}
+
+.gen-link-close {
+	position: relative;
+  top: -50px;
+  right: -10px;
+}
+
+.gen-link-btn {
+	margin-top: 15px;
+}
+
+.gen-link-form {
+	text-align: center;
 }

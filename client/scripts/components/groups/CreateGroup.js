@@ -6,6 +6,7 @@ class CreateGroup extends React.Component {
 		super();
 		this.state = {
 			name: '',
+			organization: "5a2211a94e475013a1386f09"
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
