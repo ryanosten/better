@@ -25,13 +25,11 @@ class Groups extends React.Component {
 
 	render() {
 		return(
-			<div className="group-headline">
-				<h1>Groups</h1>
-				<ul>
-					<GroupList groups={this.state.groups} />
-				</ul>
+			<div className="main-container">
+				<h4 className="headline">Groups</h4>
+				<GroupList groups={this.state.groups} />
 				<Link to='/groups/create'>
-					<button>Add Group</button>
+					<button className="btn btn-primary">Add Group</button>
 				</Link>				
 			</div>
 

@@ -53,7 +53,7 @@ app.post('/api/signup', (req, res, next) => {
 
 app.get('/api/logout', (req, res) => {
 	req.logout();
-	res.json('USer has logged out');
+	res.json('User has logged out');
 });
 
 app.get('/api/me', (req,res) => {
@@ -65,7 +65,7 @@ app.get('/api/me', (req,res) => {
 });
 
 app.get('/api/feedback', (req, res, next) => {
-	Feedback.find()
+	Feedback.find().populate('group').exec()
 		.then((docs) => {
 			res.status(200).send(docs);
 		})
@@ -149,6 +149,18 @@ app.get('/api/comments/:feedbackId', (req, res, next) => {
 		.catch((err) => {
 			res.status(500).send(err);
 		})
+})
+
+app.get('/feedback/create/:groupId', (req, res, next) => {
+	Group.find({'_id': req.params.groupId})
+	.then((doc) => {
+		if(doc.length) {
+			next();
+		}
+	})
+	.catch((err) => {
+		res.status(400).send('Sorry this page doesn\'t exist. Make sure you copied your link correctly!');
+	})
 })
 
 app.get('*', requireLogin, (req, res, next) => {

@@ -23,6 +23,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
+    "moment": "^2.19.2",
     "mongoose": "^4.13.0",
     "passport": "^0.4.0",
     "passport-local-mongoose": "^4.4.0",

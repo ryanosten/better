@@ -28,7 +28,7 @@ class GroupSelect extends React.Component {
 		if (e.target.value === 'all') {
 			selectedGroup = null;
 		} else {
-			selectedGroup = this.props.groupList.filter(item => e.target.value === item.groupName);
+			selectedGroup = this.props.groupList.filter(item => e.target.value === item.name);
 		}
 
 		this.props.updateSelectedGroup(selectedGroup);
@@ -37,11 +37,11 @@ class GroupSelect extends React.Component {
 	render() {		
 
 		return (
-			<div>
-				<h1>Groups</h1>
+			<div className='group-select'>
+				<h4>Groups</h4>
 				<select onChange={this.handleSelectGroup}>
 					<option value="all">All</option>
-					{this.props.groupList.map(group => <option key={group._id} value={group.groupName}>{group.groupName}</option>)}
+					{this.props.groupList.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
 				</select>
 			</div>
 		)

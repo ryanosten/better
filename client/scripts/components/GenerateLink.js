@@ -24,7 +24,7 @@ class GenerateLink extends React.Component {
 	}
 
 	handleSelectGroup(e) {
-		const group = this.state.groupList.filter(item => e.target.value === item.groupName);
+		const group = this.state.groupList.filter(item => e.target.value === item.name);
 		const selectedGroup = group[0];
 		this.setState({ selectedGroup });
 	}
@@ -54,16 +54,16 @@ class GenerateLink extends React.Component {
 				  <div className="modal-dialog" role="document">
 				    <div className="modal-content">
 				      <div className="modal-header">
-				        <h5 className="modal-title" id="exampleModalLabel">Select Group</h5>
+				        <h5 className="modal-title gen-link-title" id="exampleModalLabel">Select Group</h5>
+				         <select className="gen-link-group" onChange={this.handleSelectGroup}>
+									{this.state.groupList.map(group => <option key={group._id} value={group.name}>{group.name}</option>)}
+								</select>
 				        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
 				      </div>
 				      <div className="modal-body">
-				        <select onChange={this.handleSelectGroup}>
-									{this.state.groupList.map(group => <option key={group._id} value={group.groupName}>{group.groupName}</option>)}
-								</select>
-								<span>{this.state.link}</span>
+				      	{this.state.link}
 				      </div>
 				      <div className="modal-footer gen-link">
 				        <button type="button" className="btn btn-primary" onClick={this.genLink}>Get Link</button>

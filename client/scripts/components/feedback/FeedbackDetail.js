@@ -1,5 +1,5 @@
 import React from 'react';
-import Comments from './Comments';
+import Comments from './comments/Comments';
 
 class FeedbackDetail extends React.Component {
 	constructor() {
@@ -12,13 +12,12 @@ class FeedbackDetail extends React.Component {
 		}
 
 		this.fetchFeedbackDetail = this.fetchFeedbackDetail.bind(this);
-		// this.fetchComments = this.fetchComments.bind(this);
 	}
 
 	render(){
 		return (
-			<div className="fb-headline">
-				<h1>Feedback</h1>
+			<div className="main-container">
+				<h4 className="fb-headline">Feedback</h4>
 				<p>{this.state.content}</p>
 				<h5>Comments</h5>
 				<Comments comments={this.state.comments} feedbackId={this.props.match.params.feedbackId} fetchComments={this.fetchFeedbackDetail}/>
@@ -28,7 +27,6 @@ class FeedbackDetail extends React.Component {
 
 	componentDidMount() {
 		this.fetchFeedbackDetail();
-		// this.fetchComments();
 	}
 
 	fetchFeedbackDetail() {
@@ -44,15 +42,6 @@ class FeedbackDetail extends React.Component {
 				this.setState({ comments });
 				})
 	}
-
-	// fetchComments() {
-	// 	fetch(`/api/comments/${this.props.match.params.feedbackId}`)
-	// 		.then(res => res.json())
-	// 		.then(json => {
-	// 			const comments = json.comments
-	// 			this.setState({ comments })
-	// 		})
-	// }
 }
 
 export default FeedbackDetail;

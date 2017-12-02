@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import Home from './components/Home';
 import Nav from './components/Nav';
-import Groups from './components/Groups';
-import CreateGroup from './components/CreateGroup';
-import FeedbackDetail from './components/FeedbackDetail';
-import CreateFeedback from './components/CreateFeedback';
+import Groups from './components/groups/Groups';
+import CreateGroup from './components/groups/CreateGroup';
+import FeedbackDetail from './components/feedback/FeedbackDetail';
+import CreateFeedback from './components/feedback/CreateFeedback';
 import GenerateLink from './components/GenerateLink'
 import Users from './components/Users';
 

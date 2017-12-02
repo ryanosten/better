@@ -41,9 +41,11 @@ class CreateComment extends React.Component {
 
 	render() {
 		return(
-			<form onSubmit={this.handleSubmit}>
-				<input type="text" onChange={this.handleChange} name='content' value={this.state.content}/>
-				<button type="submit">comment</button>
+			<form  onSubmit={this.handleSubmit}>
+				<div className="form-group">
+					<input className="form-control" type="text" onChange={this.handleChange} name='content' value={this.state.content} placeholder="Your comment"/>
+				</div>
+				<button className="btn btn-outline-dark btn-sm" type="submit">comment</button>
 			</form>
 		)
 	}

@@ -1,7 +1,7 @@
 import React from 'react';
-import FeedbackList from './FeedbackList';
-import GroupSelect from './GroupSelect';
-import CreateGroup from './CreateGroup';
+import FeedbackList from './feedback/FeedbackList';
+import GroupSelect from './groups/GroupSelect';
+import CreateGroup from './groups/CreateGroup';
 import Nav from './Nav';
 import Login from './Login';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
@@ -13,7 +13,8 @@ class Home extends React.Component {
 			user: null,
 			groupList: [],
 			feedbackList:[],
-			selectedGroup: null
+			selectedGroup: null,
+			//add page prop to state
 		}
 		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
 		this.filterFeedback = this.filterFeedback.bind(this);
@@ -42,8 +43,8 @@ class Home extends React.Component {
 			return feedbackList;
 		}
 
-		const selectedGroupId = selectedGroup.map(item => item._id)
-		const filteredFeedbackList = feedbackList.filter(item => selectedGroupId.includes(item.groupId));
+		const selectedGroupId = selectedGroup.map(item => item._id);
+		const filteredFeedbackList = feedbackList.filter(item => selectedGroupId.includes(item.group._id));
 		
 		return filteredFeedbackList;
 	}
@@ -69,7 +70,7 @@ class Home extends React.Component {
 			const feedback = this.filterFeedback();
 
 			return (
-				<div className="home-container">
+				<div className="main-container">
 					<GroupSelect updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
 					<FeedbackList initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
 				</div>

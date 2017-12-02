@@ -3,7 +3,7 @@ require('./userModel');
 
 const GroupSchema = new mongoose.Schema({
 	createdAt: Date,
-	groupName: String,
+	name: String,
 	admins: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'

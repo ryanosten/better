@@ -6,8 +6,8 @@ class CreateFeedback extends React.Component {
 		super(props);
 		this.state = {
 			content: '',
-			groupId: this.props.match.params.groupId,
-			author: '',
+			group: this.props.match.params.groupId,
+			// author: '',
 			createdAt: Date.now(),
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,11 +55,11 @@ class CreateFeedback extends React.Component {
 	render() {
 
 		return(
-			<div>
-				<h1>Leave Some Feedback</h1>
-				<form onSubmit={this.handleSubmit}>
-					<textarea type="text" onChange={this.handleChange} name="content" value={this.state.content} ></textarea>
-					<button type="submit">submit</button>
+			<div className="main-container col-sm-6">
+				<h4>Leave Some Feedback</h4>
+				<form className="form-group" onSubmit={this.handleSubmit}>
+					<textarea className="form-control fb-txt-area" type="text" onChange={this.handleChange} name="content" value={this.state.content} ></textarea>
+					<button className="btn btn-primary" type="submit">submit</button>
 				</form>
 			</div>
 			

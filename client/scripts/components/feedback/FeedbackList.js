@@ -1,5 +1,5 @@
 import React from 'react';
-import FeedbackItem from './FeedbackItem';
+import FeedbackItem from './feedback/FeedbackItem';
 
 class FeedbackList extends React.Component {
 	constructor(props) {
@@ -23,11 +23,17 @@ class FeedbackList extends React.Component {
 	}
 
 	render() {
+
+		const sortedFeedback = this.props.feedbackList.sort((a,b) => {
+			return (a.createdAt > b.createdAt) ? -1 : ((b.createdAt > a.createdAt) ? 1 : 0);
+		
+		});
+
 		return (
-			<div>
-				<h1>Feedback Activity</h1>
-				<ul>
-				{this.props.feedbackList.map(item => <FeedbackItem key={item._id} feedbackId={item._id} content={item.content} />)} 
+			<div className="fb-container">
+				<h4 className="headline">Your Feedback</h4>
+				<ul className="fb-list">
+				{sortedFeedback.map(item => <FeedbackItem key={item._id} feedbackId={item._id} content={item.content} createdAt={item.createdAt} groupName={item.group.name} />)} 
 				</ul>
 			</div>
 		)

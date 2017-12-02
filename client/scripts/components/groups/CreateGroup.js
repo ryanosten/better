@@ -5,7 +5,7 @@ class CreateGroup extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			groupName: [],
+			name: '',
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,11 +52,13 @@ class CreateGroup extends React.Component {
 	render(){
 		
 		return(
-			<div>
-				<h1>Add a Group</h1>
-				<form onSubmit={this.handleSubmit}>
-					<textarea type="text" onChange={this.handleChange} name="groupName" value={this.state.group} ></textarea>
-					<button type="submit">submit</button>
+			<div className="main-container">
+				<h4>Add a Group</h4>
+				<form className="form-group" onSubmit={this.handleSubmit}>
+					<div className="form-group row col-sm-6">
+						<input className="form-control" type="text" onChange={this.handleChange} name="name" value={this.state.name} placeholder="group name" required/>
+					</div>
+					<button className="btn btn-primary" type="submit">submit</button>
 				</form>
 
 			</div>
