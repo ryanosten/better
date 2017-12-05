@@ -33,7 +33,6 @@ class GenerateLink extends React.Component {
 		this.genLink = this.genLink.bind(this);
 		this.clearLink = this.clearLink.bind(this);
 		this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
 	}
 
@@ -52,7 +51,7 @@ class GenerateLink extends React.Component {
 
 	genLink(e){
 		e.preventDefault();
-		const link = `localhost:8080/feedback/${this.state.organization}/${this.state.selectedGroup.name}`
+		const link = `localhost:8080/feedback/${this.state.organization}/${this.state.selectedGroup.shortId}`
 		this.setState({ link });
 		
 	}
@@ -73,17 +72,13 @@ class GenerateLink extends React.Component {
 	closeModal() {
 		this.setState({ modalIsOpen: false })
 	}
-	
-	afterOpenModal() {
-		//
-	}
 
 	render() {
 		//let link; wanted to not store link in state couldnt figure it out... tried to call genLink to return link and store in link this var
 
 		return (
 			<div>
-        <a className="nav-link" onClick={this.openModal}>Generate Link</a>
+        <a className="nav-link" onClick={this.openModal}>Get Link</a>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

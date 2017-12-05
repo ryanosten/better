@@ -14,8 +14,8 @@ class Home extends React.Component {
 			groupList: [],
 			feedbackList:[],
 			selectedGroup: null,
-			//add page prop to state
 		}
+		
 		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
 		this.filterFeedback = this.filterFeedback.bind(this);
 		this.initializeGroupList = this.initializeGroupList.bind(this);

@@ -12,7 +12,8 @@ const GroupSchema = new mongoose.Schema({
 	organization: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Organization'
-	}
+	},
+	shortId: String
 });
 
 module.exports = mongoose.model('Group', GroupSchema);

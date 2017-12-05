@@ -7,9 +7,8 @@ class CreateFeedback extends React.Component {
 		this.state = {
 			content: '',
 			organization: this.props.match.params.organization,
-			group: this.props.match.params.group,
+			shortId: this.props.match.params.shortId,
 			// author: '',
-			groupId: '',
 			createdAt: '',
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +26,7 @@ class CreateFeedback extends React.Component {
 			const feedbackItem = Object.assign({}, this.state);
 			feedbackItem.createdAt = Date.now(); 
 			
-			fetch(`/api/feedback/create/${this.state.organization}/${this.state.group}`, {
+			fetch(`/api/feedback/create/${this.state.organization}/${this.state.shortId}`, {
 				method: 'POST',
 				body: JSON.stringify(feedbackItem),
 				headers: {
@@ -35,23 +34,10 @@ class CreateFeedback extends React.Component {
 				}
 			}).then(res => {
 				return res.json()
-			}).then(json => {
-				this.props.history.push(`/feedback/${json._id}`);
+			}).then(json => {		
+				this.props.history.push(`/feedback/${json._id}?showAlert=true`);
 			})
 	}
-		
-
-			// //create an alert
-			// let successAlert = "<div class='alert alert-warning alert-dismissible fade show' role='alert'>"
-			// 			successAlert += "<strong>Feedback successfully created!</strong>"
-			//   		successAlert += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>"
-			//     	successAlert += "<span aria-hidden='true'>&times;</span></button></div>"
-
-			// $('.fb-headline').prepend(successAlert);
-
-			// setTimeout(function() {
-			// 	$('.alert').remove()
-			// }, 3000)
 
 	render() {
 

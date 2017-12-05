@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
-const fetch = require('node-fetch');
+const shortid = require('shortid');
 
 const requireLogin = require('./require_login')
 
@@ -125,6 +125,7 @@ app.post('/api/feedback/create', requireLogin, (req, res, next) => {
 
 app.post('/api/groups/create', requireLogin, (req, res, next) => {
 	const groupModel = new Group();
+	req.body.shortId = shortid.generate();
 
 	const group = Object.assign(groupModel, req.body);
 
@@ -166,25 +167,26 @@ app.get('/api/comments/:feedbackId', (req, res, next) => {
 		})
 })
 
-app.get('/feedback/create/:groupId', (req, res, next) => {
-	Group.find({'_id': req.params.groupId})
+app.get('/feedback/:organization/:shortId', (req, res, next) => {
+	Group.find({'shortId': req.params.shortId})
 	.then((doc) => {
 		if(doc.length) {
 			next();
+		} else {
+			res.status(400).send('Sorry this page doesn\'t exist. Make sure you copied your link correctly!'); 
 		}
-	})
-	.catch((err) => {
-		res.status(400).send('Sorry this page doesn\'t exist. Make sure you copied your link correctly!');
 	})
 })
 
-app.post('/api/feedback/create/:organization/:group', (req, res, next) => {
+//tried to implement .catch((err)) but couldnt, was hanging
+
+app.post('/api/feedback/create/:organization/:shortId', (req, res, next) => {
 	const feedbackModel = new Feedback();
-	const group = req.params.group;
+	const shortId = req.params.shortId;
 
 	Organization.findOne({ 'name': req.params.organization })
 		.then((org) => {
-			return Group.find({ $and:[ { 'organization': org._id}, { 'name': group } ]})      
+			return Group.find({ $and:[ { 'organization': org._id}, { 'shortId': shortId } ]})      
 		})
 		.then((doc) => {
 			req.body.group = doc[0]._id
