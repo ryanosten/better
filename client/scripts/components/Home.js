@@ -3,7 +3,9 @@ import FeedbackList from './feedback/FeedbackList';
 import GroupSelect from './groups/GroupSelect';
 import CreateGroup from './groups/CreateGroup';
 import Nav from './Nav';
-import Login from './Login';
+import CreateUser from './CreateUser';
+import LoginUser from './LoginUser';
+// import Login from './Login';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 class Home extends React.Component {
@@ -14,13 +16,17 @@ class Home extends React.Component {
 			groupList: [],
 			feedbackList:[],
 			selectedGroup: null,
+			loggedIn: false,
 		}
 		
 		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
 		this.filterFeedback = this.filterFeedback.bind(this);
 		this.initializeGroupList = this.initializeGroupList.bind(this);
 		this.updateSelectedGroup = this.updateSelectedGroup.bind(this);
-		this.userLoggedIn = this.userLoggedIn.bind(this);
+		this.login = this.login.bind(this);
+		this.refresh = this.refresh.bind(this);
+		this.logout = this.logout.bind(this);
+		// this.userLoggedIn = this.userLoggedIn.bind(this);
 
 	};
 
@@ -49,23 +55,48 @@ class Home extends React.Component {
 		return filteredFeedbackList;
 	}
 
-	componentDidMount() {
-		fetch('/api/me')
-			.then(res => res.json)
-			.then((user) => {
-				if(user =! null) {
-					this.userLoggedIn(user)
-			}
+	login() {
+		this.setState({
+			loggedIn: true,
 		})
 	}
 
-	userLoggedIn(user) {
-		this.setState({ user }, this.refresh)
+	logout() {
+		fetch('/api/logout', {
+			method: 'GET',
+			credentials: 'include',
+		})
+		.then(() => {
+			this.setState({
+				loggedIn: false,
+				user: null,
+			});
+		});
+	}
+
+	refresh() {
+		fetch('/api/me', {
+			method: 'GET',
+			credentials: 'include'
+		})
+		.then((res) =>  {
+			return res.json()
+		})
+		.then((user) => {
+			if(user._id){
+				this.setState({user: user})
+				this.login();
+			} 
+		})
+	}
+
+	componentDidMount() {
+		this.refresh();
 	}
 
 
 	render() {
-		if(this.state.user) {
+		// if(this.state.user) {
 
 			const feedback = this.filterFeedback();
 
@@ -75,9 +106,7 @@ class Home extends React.Component {
 					<FeedbackList initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
 				</div>
 			)
-		} else {
-			return <Login onLogin={this.userLoggedIn} />
-		}		
+	
 	};
 };
 

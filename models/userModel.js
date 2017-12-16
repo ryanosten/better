@@ -4,7 +4,6 @@ require('./organizationModel');
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const UserSchema = mongoose.Schema({
-	username: String,
 	email: String,
 	createdAt: Date,
 	role: String,
@@ -18,6 +17,6 @@ const UserSchema = mongoose.Schema({
 	}]
 });
 
-UserSchema.plugin(passportLocalMongoose, { usernameField: 'username' })
+UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' })
 
 module.exports = mongoose.model('User', UserSchema);

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import GenerateLink from './GenerateLink';
 
-const Nav = () => {
+const Nav = ( { logout } ) => {
 	return (
 		<nav className="navbar navbar-expand-sm navbar-dark bg-dark">
 			<Link to={'/'} className="navbar-brand">Better</Link>
@@ -20,6 +20,9 @@ const Nav = () => {
 					</li>
 					<li className="nav-item">
 						<GenerateLink />
+					</li>
+					<li className="nav-item">
+							<a className="nav-link" onClick={logout}>Logout</a>
 					</li>
 				</ul>
 			</div>

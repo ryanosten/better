@@ -19,38 +19,32 @@ mongoose.connect('mongodb://localhost/better', {
     useMongoClient: true,
 });
 
-app.use(express.static('public'));
-app.use(bodyParser.json());
-
 passport.use(User.createStrategy());
-app.use(session({ secret: 'fugglebuggle', resave: false, saveUninitialized: true }))
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(bodyParser.json());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(session({ secret: 'gushank', resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(express.static('public'));
 
 app.post('/api/login', passport.authenticate('local'), (req, res) => {
 	res.send(req.user);
-});
+})
 
 app.post('/api/signup', (req, res, next) => {
-	const user = new User();
-	user.email = req.body.email;
-	user.username = req.body.username;
-	user.createdAt = new Date();
+	const newUser = new User ({
+		email: req.body.email,
+	});
 
-	User.register(user, req.body.password, (err) => {
-		if (err) {
-			return res.send(err)
+	User.register(newUser, req.body.password, (err, user) => {
+		if(err){
+			res.send(err)
+		} else {
+			res.send(user)
 		}
-
-		req.login(user, (err) => {
-			if(err) {
-				return res.send(err)
-			}
-			return res.send(user)
-		})
-	})
+	});
 });
 
 app.get('/api/logout', (req, res) => {
@@ -59,12 +53,18 @@ app.get('/api/logout', (req, res) => {
 });
 
 app.get('/api/me', (req,res) => {
-  if (!req.user) {
-    res.status(200).send({ message: 'No user found.' });
+	console.log(req.user);
+  if(req.user) {
+  	res.status(200).send(req.user)
   } else {
-    res.json(req.user);
+  	res.status(401).json({message: 'Unauthorized'})
   }
 });
+
+app.get('/api/users', (req, res) => {
+	User.find()
+		.then(doc => res.send(doc));
+})
 
 app.get('/api/feedback', (req, res, next) => {
 	Feedback.find().populate('group').exec()
@@ -76,7 +76,7 @@ app.get('/api/feedback', (req, res, next) => {
 		})
 })
 
-app.get('/api/groups', requireLogin,  (req, res, next) => {
+app.get('/api/groups',  (req, res, next) => {
 	Group.find().populate('organization').exec()
 		.then((docs) => {
 			res.status(200).send(docs);
