@@ -52,7 +52,7 @@ class GenerateLink extends React.Component {
 
 	genLink(e){
 		e.preventDefault();
-		const link = `localhost:8080/feedback/${this.state.organization}/${this.state.selectedGroup.shortId}`
+		const link = `better-feedback.herokuapp.com/feedback/${this.state.organization}/${this.state.selectedGroup.shortId}`
 		this.setState({ link });
 		
 	}
