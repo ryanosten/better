@@ -5,16 +5,17 @@ import CreateGroup from './CreateGroup';
 import GroupList from './GroupList';
 
 class Groups extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
+			user: props.user._id,
 			groups: []
 		}
 		this.fetchGroups = this.fetchGroups.bind(this);
 	}
 
 	fetchGroups() {
-		fetch('/api/groups')
+		fetch(`/api/groups/${this.state.user}`)
 			.then(res => res.json())
 			.then(json => this.setState({ groups: json })) 		
 	}

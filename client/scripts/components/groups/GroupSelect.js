@@ -3,13 +3,16 @@ import React from 'react'
 class GroupSelect extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			user: props.user
+		}
 		this.fetchGroups = this.fetchGroups.bind(this);
 		this.handleFetchGroups = this.handleFetchGroups.bind(this);
 		this.handleSelectGroup = this.handleSelectGroup.bind(this);
 	}
 
 	fetchGroups() {
-		fetch('/api/groups')
+		fetch(`/api/groups/${this.state.user}`)
 			.then(res => res.json())
 			.then(json => this.handleFetchGroups(json)) 
 	}

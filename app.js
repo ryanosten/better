@@ -53,7 +53,6 @@ app.get('/api/logout', (req, res) => {
 });
 
 app.get('/api/me', (req,res) => {
-	console.log(req.user);
   if(req.user) {
   	res.status(200).send(req.user)
   } else {
@@ -66,18 +65,26 @@ app.get('/api/users', (req, res) => {
 		.then(doc => res.send(doc));
 })
 
-app.get('/api/feedback', (req, res, next) => {
-	Feedback.find().populate('group').exec()
-		.then((docs) => {
-			res.status(200).send(docs);
-		})
-		.catch((err) => {
-			res.status(400).send(err);
+app.get('/api/allfeedback/:user', (req, res, next) => {
+
+	Group.find({ 'admins': { $in: [req.params.user]}})
+		.then((groups) => {
+			const user_groups = groups.map(item => item._id);
+			return user_groups
+			})
+		.then((user_groups) => {
+			Feedback.find({ 'group': {$in: user_groups}}).populate('group').exec()
+				.then((docs) => {
+					res.status(200).send(docs);
+				})
+				.catch((err) => {
+					res.status(400).send(err);
+				})
 		})
 })
 
-app.get('/api/groups',  (req, res, next) => {
-	Group.find().populate('organization').exec()
+app.get('/api/groups/:user',  (req, res, next) => {
+	Group.find({ 'admins': { $in: [req.params.user] } })
 		.then((docs) => {
 			res.status(200).send(docs);
 		})
@@ -100,6 +107,7 @@ app.get('/api/groups',  (req, res, next) => {
 // })
 
 app.get('/api/feedback/:feedbackId', (req, res, next) => {
+	console.log(req.params.feedbackId);
 	Feedback.findOne({ '_id': req.params.feedbackId})
 		.then((docs) => {
 			res.status(200).send(docs);
@@ -126,6 +134,7 @@ app.post('/api/feedback/create', requireLogin, (req, res, next) => {
 app.post('/api/groups/create', requireLogin, (req, res, next) => {
 	const groupModel = new Group();
 	req.body.shortId = shortid.generate();
+	req.body.admins = req.body.user;
 
 	const group = Object.assign(groupModel, req.body);
 

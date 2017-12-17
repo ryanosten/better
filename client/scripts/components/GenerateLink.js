@@ -18,9 +18,10 @@ const customStyles = {
 
 class GenerateLink extends React.Component {
 	
-	constructor() {
-		super();
-		this.state={
+	constructor(props) {
+		super(props);
+		this.state = {
+			user: props.user._id,
 			organization: 'hackeryou',
 			groupList: [],
 			selectedGroup: null,
@@ -37,7 +38,7 @@ class GenerateLink extends React.Component {
 	}
 
 	fetchGroups() {
-		fetch('/api/groups')
+		fetch(`/api/groups/${this.state.user}`)
 			.then(res => res.json())
 			.then(json => this.setState({ groupList: json }))
 			.then(() => this.setState({ selectedGroup: this.state.groupList[0] }))

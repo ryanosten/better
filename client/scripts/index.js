@@ -17,7 +17,8 @@ class App extends React.Component {
 		super();
 		this.state = {
 		user: null,
-		loggedIn: false,	
+		loggedIn: false,
+		path: window.location.pathname.substr(1,8),	
 		}	
 		this.login = this.login.bind(this);
 		this.refresh = this.refresh.bind(this);
@@ -71,20 +72,34 @@ class App extends React.Component {
 				{this.state.loggedIn ?
 					<Router>
 						<div>
-							<Nav logout={this.logout} />
-							<Route exact path='/' component={Home} />
-							<Route exact path='/groups' component={Groups} />
-							<Route exact path='/groups/create' component={CreateGroup} />
-							<Route exact path='/feedback/:feedbackId' component={FeedbackDetail} />
+							<Nav user={this.state.user} logout={this.logout} />
+							<Route exact path='/' render={(props) => <Home user={this.state.user} {...props} />}/>
+							<Route exact path='/groups' render={(props) => <Groups user={this.state.user} {...props} />}/>
+							<Route exact path='/groups/create' render={(props) => <CreateGroup user={this.state.user} {...props} />}/>
+							<Route exact path='/feedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
 							<Route exact path='/feedback/:organization/:shortId' component={CreateFeedback} />
 							<Route exact path='/generate-link' component={GenerateLink}></Route>
 						</div>
 					</Router> 
 				:
-					<div>
-						<CreateUser />
-						<LoginUser refresh={this.refresh} login={this.login} />
-					</div>
+				((this.state.path === 'feedback') ? (
+						<Router>
+							<div>
+								<Route exact path='/feedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
+								<Route exact path='/feedback/:organization/:shortId' component={CreateFeedback} />
+							</div>
+						</Router>
+					)
+
+					:
+					(
+						<div>
+							<CreateUser />
+							<LoginUser refresh={this.refresh} login={this.login} />
+						</div>
+					)
+				)
+					
 				}	
 			</div>
 		)

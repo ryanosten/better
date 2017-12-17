@@ -2,9 +2,10 @@ import React from 'react';
 
 class CreateGroup extends React.Component {
 	
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
+			user: props.user._id,
 			name: '',
 			organization: "5a2211a94e475013a1386f09",
 			shortId: ''
@@ -28,7 +29,7 @@ class CreateGroup extends React.Component {
 		
 		console.log(newGroup);
 		
-		fetch('/api/groups/create', {
+		fetch(`/api/groups/create`, {
 			method: 'POST',
 			body: JSON.stringify(newGroup),
 			headers: {

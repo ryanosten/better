@@ -9,23 +9,19 @@ import LoginUser from './LoginUser';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 class Home extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			user: null,
+			user: props.user._id,
 			groupList: [],
 			feedbackList:[],
 			selectedGroup: null,
-			loggedIn: false,
 		}
 		
 		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
 		this.filterFeedback = this.filterFeedback.bind(this);
 		this.initializeGroupList = this.initializeGroupList.bind(this);
 		this.updateSelectedGroup = this.updateSelectedGroup.bind(this);
-		this.login = this.login.bind(this);
-		this.refresh = this.refresh.bind(this);
-		this.logout = this.logout.bind(this);
 		// this.userLoggedIn = this.userLoggedIn.bind(this);
 
 	};
@@ -55,44 +51,7 @@ class Home extends React.Component {
 		return filteredFeedbackList;
 	}
 
-	login() {
-		this.setState({
-			loggedIn: true,
-		})
-	}
-
-	logout() {
-		fetch('/api/logout', {
-			method: 'GET',
-			credentials: 'include',
-		})
-		.then(() => {
-			this.setState({
-				loggedIn: false,
-				user: null,
-			});
-		});
-	}
-
-	refresh() {
-		fetch('/api/me', {
-			method: 'GET',
-			credentials: 'include'
-		})
-		.then((res) =>  {
-			return res.json()
-		})
-		.then((user) => {
-			if(user._id){
-				this.setState({user: user})
-				this.login();
-			} 
-		})
-	}
-
-	componentDidMount() {
-		this.refresh();
-	}
+	
 
 
 	render() {
@@ -102,8 +61,8 @@ class Home extends React.Component {
 
 			return (
 				<div className="main-container">
-					<GroupSelect updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
-					<FeedbackList initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
+					<GroupSelect user={this.state.user} updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
+					<FeedbackList user={this.state.user} initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
 				</div>
 			)
 	

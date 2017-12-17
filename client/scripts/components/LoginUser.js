@@ -34,7 +34,6 @@ class LoginUser extends React.Component {
 			}
 		})
 		.then((json) => {
-			// console.log(json);
 			this.props.refresh();
 		})
 	}
@@ -47,7 +46,7 @@ class LoginUser extends React.Component {
 
 	render() {
 		return(
-			<div>
+			<div className='loginUser'>
 				<h2>Login User</h2>
 				<form onSubmit={this.handleSubmit}>
 					<Field

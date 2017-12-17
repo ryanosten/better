@@ -7,7 +7,7 @@ const Comments = (props) => {
 	return(
 		<div>
 			{props.comments.map(item => <CommentItem key={item._id} content={item.content} />)}
-			<CreateComment feedbackId={props.feedbackId} fetchComments={props.fetchComments}/>
+			<CreateComment user={props.user} feedbackId={props.feedbackId} fetchComments={props.fetchComments}/>
 		</div>
 	)
 }

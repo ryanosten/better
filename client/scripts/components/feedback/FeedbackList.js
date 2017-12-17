@@ -4,12 +4,15 @@ import FeedbackItem from './FeedbackItem';
 class FeedbackList extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			user: props.user
+		}
 		this.fetchFeedback = this.fetchFeedback.bind(this);
 		this.handleFetchFeedback = this.handleFetchFeedback.bind(this);
 	}
 
 	fetchFeedback() {
-		fetch('/api/feedback')
+		fetch(`/api/allfeedback/${this.state.user}`)
 			.then(res => res.json())
 			.then(json => this.handleFetchFeedback(json));
 	}

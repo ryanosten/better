@@ -19,12 +19,13 @@ class FeedbackDetail extends React.Component {
 	}
 
 	render(){
+
 		return (
 			<div className="main-container">
 				<h4 className="fb-headline">Feedback</h4>
 				<p>{this.state.content}</p>
 				<h5>Comments</h5>
-				<Comments comments={this.state.comments} feedbackId={this.props.match.params.feedbackId} fetchComments={this.fetchFeedbackDetail}/>
+				<Comments user={this.props.user} comments={this.state.comments} feedbackId={this.props.match.params.feedbackId} fetchComments={this.fetchFeedbackDetail}/>
 				<Alert />
 			</div>
 		)
@@ -57,11 +58,8 @@ class FeedbackDetail extends React.Component {
 		}
 	}
 
-	// componentDidUnmount() {
-	// 	this.setState({ showAlert: false });
-	// }
-
 	fetchFeedbackDetail() {
+		console.log('fetchfeedbackDetail' + this.props.match.params.feedbackId)
 		fetch(`/api/feedback/${this.props.match.params.feedbackId}`)
 			.then(res => res.json())
 			.then(json => {
