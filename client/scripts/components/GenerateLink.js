@@ -102,8 +102,4 @@ class GenerateLink extends React.Component {
 	}
 }
 	
-		
-	
-
-
 export default GenerateLink;

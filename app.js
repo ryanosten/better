@@ -15,7 +15,9 @@ const Group = require('./models/groupModel.js');
 const User = require('./models/userModel.js');
 const Organization = require('./models/organizationModel.js');
 
-mongoose.connect('mongodb://localhost/better', {
+const db = process.env.MONGODB_SERVER || 'mongodb://localhost/better'
+
+mongoose.connect(db, {
     useMongoClient: true,
 });
 
@@ -215,6 +217,6 @@ app.get('*', requireLogin, (req, res, next) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
 })
 
-app.listen(8080, function() {
+app.listen(process.env.PORT || 8080, function() {
 	console.log("App is now listening on port 8080!")
 })
