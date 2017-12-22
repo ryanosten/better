@@ -7,14 +7,6 @@ const UserSchema = mongoose.Schema({
 	email: String,
 	createdAt: Date,
 	role: String,
-	groups: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Group'
-	}],
-	organization: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Organization'
-	}]
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' })

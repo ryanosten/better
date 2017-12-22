@@ -7,6 +7,7 @@ const session = require('express-session');
 const shortid = require('shortid');
 const routes = require('./controller')
 
+const User = require('./models/userModel.js');
 const requireLogin = require('./require_login')
 
 const app = express();

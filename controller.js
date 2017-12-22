@@ -125,7 +125,8 @@ routes.postFeedback = (req, res, next) => {
 			.catch((err) => {
 				res.status(400).send(err);
 			})
-	}
+	})
+}
 
 
 // app.get('/api/:organization/:group', (req, res, next) => {
