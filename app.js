@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
-const shortid = require('shortid');
 const routes = require('./controller')
 
 const User = require('./models/userModel.js');
