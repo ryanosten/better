@@ -61,12 +61,9 @@ class GenerateLink extends React.Component {
 		this.setState({ link: ''})
 	}
 
-	componentDidMount() {
-		this.fetchGroups();
-	}
-
 	openModal() {
 		this.clearLink();
+		this.fetchGroups();
 		this.setState({ modalIsOpen: true })
 	}
 
