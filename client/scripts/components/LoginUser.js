@@ -46,24 +46,24 @@ class LoginUser extends React.Component {
 
 	render() {
 		return(
-			<div className='loginUser'>
-				<h2>Login User</h2>
-				<form onSubmit={this.handleSubmit}>
+			<div>
+				<form className="form-group login-form" onSubmit={this.handleSubmit}>
+					<h4>Login</h4>
 					<Field
               type="email"
               name="email"
-              label="Enter your email: "
+              placeholder="Email address"
               value={this.state.email}
               onChange={this.handleChange}
           />
           <Field
               type="password"
               name="password"
-              label="Enter your password: "
+              placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
           />
-          <button>Login User</button>
+          <button className="btn btn-primary login-btn">Login</button>
 				</form>
 			</div>
 		)

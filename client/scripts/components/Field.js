@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Field = ({ name, label, value, onChange, type }) => {
+const Field = ({ name, placeholder, value, onChange, type }) => {
 	return(
-		<div>
-			<label htmlFor={ `field-${name}`}> { label } </label>
-			<input id={ `field-${name}` }
+		<div className='form-group row justify-content-center'>
+			<input className="form-control col-9" 
+						 id={ `field-${name}` }
 						 name={ name }
+						 placeholder={ placeholder }
 						 type={ type }
 						 value={ value }
 						 onChange={ onChange }

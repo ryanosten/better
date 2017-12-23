@@ -94,8 +94,13 @@ class App extends React.Component {
 					:
 					(
 						<div>
-							<CreateUser />
-							<LoginUser refresh={this.refresh} login={this.login} />
+							<nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+								<a href="/" className="navbar-brand">Better</a>
+							</nav>
+							<div className="container">
+								<LoginUser refresh={this.refresh} login={this.login} />
+								<CreateUser />
+							</div>
 						</div>
 					)
 				)

@@ -42,24 +42,24 @@ class CreateUser extends React.Component {
 
 	render() {
 		return (
-			<div className='createUser'>
-				<h2>Create User</h2>
-				<form onSubmit={this.handleSubmit}>
+			<div>
+				<form className="form-group create-acct-form" onSubmit={this.handleSubmit}>
+				<h4>Create Account</h4>
 					<Field
 						type="email"
 						name="email"
-						label="email"
+						placeholder="Email address"
 						value={this.state.email}
 						onChange={this.handleChange}
 					/>
 					<Field 
 						type="password"
 						name="password"
-						label="Password"
+						placeholder="Password"
 						value={this.state.password}
 						onChange={this.handleChange}
 					/>
-					<button>Create User</button>
+					<button className="btn btn-outline-success create-acct-btn">Create Account</button>
 				</form>
 			</div>
 		)

@@ -1,7 +1,28 @@
+.login-form,
+.create-acct-form {
+    text-align: center;
+    margin: 50px;
+    max-width: 420px;
+    min-width: 200px
+}
+
+.login-btn,
+.create-acct-btn {
+    width: 80%;
+}
+
+a, .btn {
+    cursor: pointer;
+}
+
 .nav-bar {
 	width: 100%;
 	height: 20px;
 	background-color: red;
+}
+
+.navbar-brand {
+    color: white;
 }
 
 .alert {
