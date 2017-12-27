@@ -19,6 +19,9 @@ const Nav = ( { user, logout } ) => {
 						<GenerateLink user={user} />
 					</li>
 					<li className="nav-item">
+						<Link to={'/team'} className="nav-link">Team</Link>
+					</li>
+					<li className="nav-item">
 							<a className="nav-link" onClick={logout}>Logout</a>
 					</li>
 				</ul>

@@ -11,6 +11,7 @@ import CreateGroup from './components/groups/CreateGroup';
 import FeedbackDetail from './components/feedback/FeedbackDetail';
 import CreateFeedback from './components/feedback/CreateFeedback';
 import GenerateLink from './components/GenerateLink';
+import Team from './components/team/Team';
 
 class App extends React.Component {
 	constructor() {
@@ -74,6 +75,7 @@ class App extends React.Component {
 						<div>
 							<Nav user={this.state.user} logout={this.logout} />
 							<Route exact path='/' render={(props) => <Home user={this.state.user} {...props} />}/>
+							<Route exact path='/team' render={(props) => <Team user={this.state.user} {...props} />}/>
 							<Route exact path='/groups' render={(props) => <Groups user={this.state.user} {...props} />}/>
 							<Route exact path='/groups/create' render={(props) => <CreateGroup user={this.state.user} {...props} />}/>
 							<Route exact path='/feedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
