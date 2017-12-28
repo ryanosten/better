@@ -19,6 +19,7 @@ const TeamTable = (props) => {
 								<td>{member.lastName}</td>
 								<td>{member.email}</td>
 								<td>{member.groups}</td>
+								<td>{member.admin ? 'Admin' : ''}</td>
 							</tr>
 						)
 					}

@@ -4,6 +4,7 @@ const User = require('./models/userModel.js');
 const Organization = require('./models/organizationModel.js');
 const shortid = require('shortid');
 const bodyParser = require('body-parser');
+const _ = require('lodash');
 
 const routes = {};
 
@@ -32,7 +33,7 @@ routes.getAllFeedback = (req, res, next) => {
 }
 
 routes.getGroups = (req, res, next) => {
-	Group.find({ 'admins': { $in: [req.params.user] } })
+	Group.find({ 'users': { $in: [req.params.user] } })
 		.then((docs) => {
 			res.status(200).send(docs);
 		})
@@ -42,7 +43,6 @@ routes.getGroups = (req, res, next) => {
 }
 
 routes.getFeedbackDetail = (req, res, next) => {
-	console.log(req.params.feedbackId);
 	Feedback.findOne({ '_id': req.params.feedbackId})
 		.then((docs) => {
 			res.status(200).send(docs);
@@ -63,6 +63,52 @@ routes.getComments = (req, res, next) => {
 		})
 }
 
+routes.getTeam = (req, res) => {
+	Group.find({ 'users': req.params.user})
+		.then(groups => {
+			let userArr = groups.map(group => {
+				return group.users
+			})
+				return userArr;
+			// const userList = groups.reduce((userArr, group) => {
+			// 	group.users.forEach((user) => {
+			// 		console.log(user + 'line71');
+			// 		console.log(req.params.user + 'line 72');
+			// 		if(!user == req.params.user) {
+			// 			console.log('condition passed')
+			// 			userArr.push(user);
+			// 		}
+			// 	})
+			// 	console.log(userArr)
+			// 	return userArr
+			// }, [])
+			// return userList;
+		}).then(users => {
+			let teams = users.reduce((team, users) => {
+					// console.log(users);
+					users.forEach((item) => {
+							team.push(item)
+						})
+					// 	if(team.indexOf(item) == -1){
+					// 		console.log('run')
+					// 		team.push(item)
+					// 		return true
+					// 	}
+					// 	return false 
+							
+					// 	})
+		
+					// console.log(team)
+					return team 			
+
+				}, [])
+			return teams
+		}).then(teams => {
+			const ids = {}
+			teams.forEach(_id => (ids[_id.toString()] = _id))
+			return Object.values(ids)
+		}).then(team => res.send(team))
+	}
 routes.anonymousFeedbackPage = (req, res, next) => {
 	Group.find({'shortId': req.params.shortId})
 	.then((doc) => {
@@ -78,7 +124,7 @@ routes.anonymousFeedbackPage = (req, res, next) => {
 routes.createGroup = (req, res, next) => {
 	const groupModel = new Group();
 	req.body.shortId = shortid.generate();
-	req.body.admins = req.body.user;
+	req.body.users = req.body.user
 
 	const group = Object.assign(groupModel, req.body);
 
@@ -130,32 +176,5 @@ routes.postFeedback = (req, res, next) => {
 	})
 }
 
-
-// app.get('/api/:organization/:group', (req, res, next) => {
-// 	Organization.findOne({ 'name': req.params.organization })
-// 		.then((org => {
-// 			Group.findOne({ 'organization': org._id, 'group': req.params.group })
-// 		}))
-// 		.then((docs) => {
-// 			res.status(200).send(docs);
-// 		})
-// 		.catch((err) => {
-// 			res.status(400).send(err);
-// 		})
-// })
-
-// routes.createFeedback = (req, res, next) => {
-// 	const feedbackModel = new Feedback();
-
-// 	const feedback = Object.assign(feedbackModel, req.body);
-	
-// 	feedback.save()
-// 		.then((doc) => {
-// 			res.status(200).send(doc);
-// 		})
-// 		.catch((err) => {
-// 			res.status(500).send(err);
-// 	})
-// };
 
 module.exports = routes;

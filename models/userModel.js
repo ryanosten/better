@@ -6,7 +6,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const UserSchema = mongoose.Schema({
 	email: String,
 	createdAt: Date,
-	role: String,
+	admin: Boolean,
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: 'email' })

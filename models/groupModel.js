@@ -5,7 +5,7 @@ require('./organizationModel');
 const GroupSchema = new mongoose.Schema({
 	createdAt: Date,
 	name: String,
-	admins: [{
+	users: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}],

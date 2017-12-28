@@ -63,6 +63,7 @@ app.get('/api/me', (req,res) => {
 app.get('/api/users', routes.getUsers);
 app.get('/api/allfeedback/:user', routes.getAllFeedback);
 app.get('/api/groups/:user',  routes.getGroups);
+app.get('/api/team/:user', routes.getTeam);
 app.get('/api/feedback/:feedbackId', routes.getFeedbackDetail);
 app.get('/api/comments/:feedbackId', routes.getComments);
 app.get('/feedback/:organization/:shortId', routes.anonymousFeedbackPage);

@@ -13,14 +13,14 @@ class Team extends React.Component {
 					lastName: 'Connor',
 					email: 'jc@gmail.com',
 					admin: false,
-					groups:[]
+					groups:['sales', 'account management']
 				},
 				{
 					firstName: 'Jesse',
 					lastName: 'Barfield',
 					email:'jb@gmail.com',
 					admin: true,
-					groups:[]
+					groups:['accounting', 'operations']
 				}
 			]
 		}
