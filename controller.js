@@ -65,50 +65,54 @@ routes.getComments = (req, res, next) => {
 
 routes.getTeam = (req, res) => {
 	Group.find({ 'users': req.params.user})
-		.then(groups => {
-			let userArr = groups.map(group => {
+		.then(usersGroups => {
+			let usersInGroups = usersGroups.map(group => {
 				return group.users
 			})
-				return userArr;
-			// const userList = groups.reduce((userArr, group) => {
-			// 	group.users.forEach((user) => {
-			// 		console.log(user + 'line71');
-			// 		console.log(req.params.user + 'line 72');
-			// 		if(!user == req.params.user) {
-			// 			console.log('condition passed')
-			// 			userArr.push(user);
-			// 		}
-			// 	})
-			// 	console.log(userArr)
-			// 	return userArr
-			// }, [])
-			// return userList;
-		}).then(users => {
-			let teams = users.reduce((team, users) => {
-					// console.log(users);
+				return usersInGroups;
+		}).then(usersInGroups => {
+			let teams = usersInGroups.reduce((team, users) => {
 					users.forEach((item) => {
 							team.push(item)
 						})
-					// 	if(team.indexOf(item) == -1){
-					// 		console.log('run')
-					// 		team.push(item)
-					// 		return true
-					// 	}
-					// 	return false 
-							
-					// 	})
-		
-					// console.log(team)
 					return team 			
-
 				}, [])
 			return teams
-		}).then(teams => {
+		}).then(res3 => {
 			const ids = {}
-			teams.forEach(_id => (ids[_id.toString()] = _id))
+			res3.forEach(_id => (ids[_id.toString()] = _id))
 			return Object.values(ids)
-		}).then(team => res.send(team))
+		}).then(res4 => {
+				 User.find({ '_id': { $in: res4 } })
+				 .then(doc => {
+					
+					let promises = [];
+					doc.map(item => {
+						promises.push(Group.find({ 'users': item._id }, {_id: 0, name: 1}))
+					})
+					
+					Promise.all(promises).then(results => {
+						const newObj = _.forIn(doc, (value, key) => {
+							value.groups = results[key]
+						})
+
+						return newObj
+					
+					}).catch(err => {
+							new Error(err)
+					
+					}).then(doc => {
+							res.status(200).send(doc)
+						})
+					})
+				})
 	}
+
+
+
+	// 							Group.find({ 'users': item._id }, {_id: 0, users: 1, name: 1})
+
+
 routes.anonymousFeedbackPage = (req, res, next) => {
 	Group.find({'shortId': req.params.shortId})
 	.then((doc) => {
