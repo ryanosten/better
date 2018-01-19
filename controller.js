@@ -78,12 +78,12 @@ routes.getTeam = (req, res) => {
 					return team 			
 				}, [])
 			return teams
-		}).then(res3 => {
+		}).then(userArr => {
 			const ids = {}
-			res3.forEach(_id => (ids[_id.toString()] = _id))
+			userArr.forEach(_id => (ids[_id.toString()] = _id))
 			return Object.values(ids)
-		}).then(res4 => {
-				 User.find({ '_id': { $in: res4 } })
+		}).then(usersClean => {
+				 User.find({ '_id': { $in: usersClean } })
 				 .then(doc => {
 					
 					let promises = [];
@@ -93,7 +93,8 @@ routes.getTeam = (req, res) => {
 					
 					Promise.all(promises).then(results => {
 						const newObj = _.forIn(doc, (value, key) => {
-							value.groups = results[key]
+							let groupsArr = results[key].map(item => item.name) 
+							value.groups = groupsArr;
 						})
 
 						return newObj
@@ -108,7 +109,15 @@ routes.getTeam = (req, res) => {
 				})
 	}
 
-
+routes.getUser = (req, res) => {
+	User.findOne({'_id': req.params.user})
+		.then(doc => {
+			res.status(200).send(doc)
+		})
+		.catch(err => {
+			res.status(500).send(err)
+		})
+}
 
 	// 							Group.find({ 'users': item._id }, {_id: 0, users: 1, name: 1})
 
@@ -178,6 +187,11 @@ routes.postFeedback = (req, res, next) => {
 				res.status(400).send(err);
 			})
 	})
+}
+
+routes.inviteUser = (req, res) => {
+	console.log(req.body)
+	res.status(200).send('a-ok')
 }
 
 

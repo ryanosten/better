@@ -63,7 +63,6 @@ class CreateGroup extends React.Component {
 					</div>
 					<button className="btn btn-primary" type="submit">submit</button>
 				</form>
-
 			</div>
 			
 		)

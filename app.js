@@ -67,6 +67,7 @@ app.get('/api/team/:user', routes.getTeam);
 app.get('/api/feedback/:feedbackId', routes.getFeedbackDetail);
 app.get('/api/comments/:feedbackId', routes.getComments);
 app.get('/feedback/:organization/:shortId', routes.anonymousFeedbackPage);
+app.get('/api/user/:user', routes.getUser);
 
 
 //APP POST ROUTES
@@ -74,6 +75,7 @@ app.get('/feedback/:organization/:shortId', routes.anonymousFeedbackPage);
 app.post('/api/groups/create', requireLogin, routes.createGroup)
 app.post('/api/comments/create/:feedbackId', routes.createComment);
 app.post('/api/feedback/create/:organization/:shortId', routes.postFeedback)
+app.post('/api/users/invite', routes.inviteUser)
 
 
 app.get('*', requireLogin, (req, res, next) => {

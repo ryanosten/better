@@ -12,6 +12,7 @@ import FeedbackDetail from './components/feedback/FeedbackDetail';
 import CreateFeedback from './components/feedback/CreateFeedback';
 import GenerateLink from './components/GenerateLink';
 import Team from './components/team/Team';
+import EditUser from './components/team/EditUser';
 
 class App extends React.Component {
 	constructor() {
@@ -81,6 +82,7 @@ class App extends React.Component {
 							<Route exact path='/feedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
 							<Route exact path='/feedback/:organization/:shortId' component={CreateFeedback} />
 							<Route exact path='/generate-link' component={GenerateLink}></Route>
+							<Route exact path='/edituser/:user' component={EditUser}></Route>
 						</div>
 					</Router> 
 				:

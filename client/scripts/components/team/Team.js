@@ -1,5 +1,5 @@
 import React from 'react';
-import InviteTeam from './InviteTeam';
+// import InviteTeam from './InviteTeam';
 import TeamTable from './TeamTable';
 
 class Team extends React.Component {
@@ -7,37 +7,29 @@ class Team extends React.Component {
 		super(props);
 		this.state = {
 			user: props.user._id,
-			teamList: [
-				{
-					firstName: 'John',
-					lastName: 'Connor',
-					email: 'jc@gmail.com',
-					admin: false,
-					groups:['sales', 'account management']
-				},
-				{
-					firstName: 'Jesse',
-					lastName: 'Barfield',
-					email:'jb@gmail.com',
-					admin: true,
-					groups:['accounting', 'operations']
-				}
-			]
+			teamList: []
 		}
 		this.getTeam = this.getTeam.bind(this);
 	}
 
 	getTeam(){
-		//make API call to get users
-		//add to state
+		fetch(`/api/team/${this.state.user}`)
+			.then(res => res.json())
+			.then(json => {
+				this.setState({
+					teamList: json
+				})
+			})
+	}
+
+	componentDidMount() {
+		this.getTeam();
 	}
 
 	render() {
 		return (
 			<div>
-				<InviteTeam/>
 				<TeamTable teamList={this.state.teamList}/>
-				<p> Users!!</p>
 			</div>
 		)
 	}
