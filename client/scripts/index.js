@@ -103,7 +103,7 @@ class App extends React.Component {
 							</nav>
 							<div className="container">
 								<LoginUser refresh={this.refresh} login={this.login} />
-								<CreateUser />
+								<CreateUser refresh={this.refresh} />
 							</div>
 						</div>
 					)

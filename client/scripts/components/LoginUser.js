@@ -5,7 +5,7 @@ class LoginUser extends React.Component {
 	constructor() {
 		super()
 		this.state = {
-			email: '',
+			username: '',
 			password: '',
 		}
 		this.handleChange = this.handleChange.bind(this);
@@ -51,9 +51,9 @@ class LoginUser extends React.Component {
 					<h4>Login</h4>
 					<Field
               type="email"
-              name="email"
+              name="username"
               placeholder="Email address"
-              value={this.state.email}
+              value={this.state.username}
               onChange={this.handleChange}
           />
           <Field

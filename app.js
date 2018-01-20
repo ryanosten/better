@@ -34,14 +34,16 @@ app.post('/api/login', passport.authenticate('local'), (req, res) => {
 
 app.post('/api/signup', (req, res, next) => {
 	const newUser = new User ({
-		email: req.body.email,
+		username: req.body.username,
 	});
 
 	User.register(newUser, req.body.password, (err, user) => {
 		if(err){
 			res.send(err)
 		} else {
-			res.send(user)
+			req.logIn(user, (err) => {
+				res.send(user)
+			})
 		}
 	});
 });

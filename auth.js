@@ -19,7 +19,6 @@ module.exports = (app) => {
 
 	app.post('/api/signup', (req, res, next) => {
 		const user = new User();
-		user.email = req.body.email;
 		user.username = req.body.username;
 		user.createdAt = new Date();
 

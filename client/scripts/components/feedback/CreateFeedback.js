@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+import AnonymousAcctCreate from './AnonymousAcctCreate'
 
 class CreateFeedback extends React.Component {
 	constructor(props) {
@@ -39,6 +42,8 @@ class CreateFeedback extends React.Component {
 			})
 	}
 
+	// <p>Create an <Link to={`/getfeedback/`}><a className="create-acct" href="">anonymous account</a></Link> to get management's responses to your feedback!</p>
+
 	render() {
 
 		return(
@@ -48,6 +53,7 @@ class CreateFeedback extends React.Component {
 					<textarea className="form-control fb-txt-area" type="text" onChange={this.handleChange} name="content" value={this.state.content} ></textarea>
 					<button className="btn btn-primary" type="submit">submit</button>
 				</form>
+				<AnonymousAcctCreate />
 			</div>
 			
 		)
