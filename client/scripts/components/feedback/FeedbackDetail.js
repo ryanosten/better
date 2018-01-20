@@ -2,6 +2,7 @@ import React from 'react';
 import Comments from '../comments/Comments';
 import Alert from 'react-s-alert';
 import queryString from 'query-string';
+import { Link } from 'react-router-dom';
 
 class FeedbackDetail extends React.Component {
 	constructor() {
@@ -27,6 +28,10 @@ class FeedbackDetail extends React.Component {
 				<h5>Comments</h5>
 				<Comments user={this.props.user} comments={this.state.comments} feedbackId={this.props.match.params.feedbackId} fetchComments={this.fetchFeedbackDetail}/>
 				<Alert />
+				{
+					this.props.user == null && 
+					<p>Create an <Link to={`/getfeedback/`}><a className="create-acct" href="">anonymous account</a></Link> to get management's responses to your feedback!</p>
+				}
 			</div>
 		)
 	}

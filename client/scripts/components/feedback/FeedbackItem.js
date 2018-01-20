@@ -9,7 +9,7 @@ const FeedbackItem = (props) => {
 		<div>
 			<li className="fb-item" onClick={props.showFeedbackDetail}>
 				<p className="fb-group">{props.groupName}<span className="fb-time">{time}</span></p>
-				<Link className="fb-anchor" to={`/feedback/${feedbackId}`}>{props.content}</Link>
+				<Link className="fb-anchor" to={`/getfeedback/${feedbackId}`}>{props.content}</Link>
 			</li>
 		</div>
 	)

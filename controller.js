@@ -5,6 +5,7 @@ const Organization = require('./models/organizationModel.js');
 const shortid = require('shortid');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
+const nodemailer = require('nodemailer');
 
 const routes = {};
 
@@ -15,9 +16,10 @@ routes.getUsers = (req, res) => {
 }
 
 routes.getAllFeedback = (req, res, next) => {
-
-	Group.find({ 'admins': { $in: [req.params.user]}})
+	console.log(req.params)
+	Group.find({ 'users': { $in: [req.params.user]}})
 		.then((groups) => {
+			console.log(groups)
 			const user_groups = groups.map(item => item._id);
 			return user_groups
 			})
@@ -172,10 +174,7 @@ routes.postFeedback = (req, res, next) => {
 	const feedbackModel = new Feedback();
 	const shortId = req.params.shortId;
 
-	Organization.findOne({ 'name': req.params.organization })
-		.then((org) => {
-			return Group.find({ $and:[ { 'organization': org._id}, { 'shortId': shortId } ]})      
-		})
+	Group.find( { 'shortId': shortId } )      
 		.then((doc) => {
 			req.body.group = doc[0]._id
 			const feedback = Object.assign(feedbackModel, req.body);
@@ -190,8 +189,21 @@ routes.postFeedback = (req, res, next) => {
 }
 
 routes.inviteUser = (req, res) => {
-	console.log(req.body)
-	res.status(200).send('a-ok')
+	// console.log(req.body)
+
+	// req.body.admin == 'true' ? req.body.admin = true : req.body.admin = false;
+
+	// const userModel = new User();
+
+	// const user = Object.assign(userModel, req.body)
+
+	// user.save() 
+	// 	.then(doc => {
+	// 		res.status(200).send(doc)
+	// 	})
+	// 	.catch(err => {
+	// 		res.status(500).send(err)
+		// })
 }
 
 

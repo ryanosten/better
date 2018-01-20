@@ -9,6 +9,13 @@
 .create-acct-btn {
   width: 80%; }
 
+.create-acct {
+  text-decoration: underline;
+  color: blue; }
+
+.create-acct:hover {
+  cursor: pointer; }
+
 a, .btn {
   cursor: pointer; }
 

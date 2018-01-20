@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import InviteGroupSelect from './InviteGroupSelect'
 
 class InviteTeam extends React.Component {
 	
@@ -64,6 +65,7 @@ class InviteTeam extends React.Component {
 	        <option value="true">Admin</option>
 	        <option value="false">Member</option>
 	      </select>
+	      <InviteGroupSelect />
 	  		<button type="submit" className="btn btn-primary mb-2 invite-btn">Send Invite</button>
 			</form>
 		)

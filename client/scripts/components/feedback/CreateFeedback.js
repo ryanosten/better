@@ -26,7 +26,7 @@ class CreateFeedback extends React.Component {
 			const feedbackItem = Object.assign({}, this.state);
 			feedbackItem.createdAt = Date.now(); 
 			
-			fetch(`/api/feedback/create/${this.state.organization}/${this.state.shortId}`, {
+			fetch(`/api/feedback/create/${this.state.shortId}`, {
 				method: 'POST',
 				body: JSON.stringify(feedbackItem),
 				headers: {
@@ -35,7 +35,7 @@ class CreateFeedback extends React.Component {
 			}).then(res => {
 				return res.json()
 			}).then(json => {		
-				this.props.history.push(`/feedback/${json._id}?showAlert=true`);
+				this.props.history.push(`/getfeedback/${json._id}?showAlert=true`);
 			})
 	}
 

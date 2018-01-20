@@ -79,8 +79,8 @@ class App extends React.Component {
 							<Route exact path='/team' render={(props) => <Team user={this.state.user} {...props} />}/>
 							<Route exact path='/groups' render={(props) => <Groups user={this.state.user} {...props} />}/>
 							<Route exact path='/groups/create' render={(props) => <CreateGroup user={this.state.user} {...props} />}/>
-							<Route exact path='/feedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
-							<Route exact path='/feedback/:organization/:shortId' component={CreateFeedback} />
+							<Route exact path='/getfeedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
+							<Route exact path='/feedback/:shortId' component={CreateFeedback} />
 							<Route exact path='/generate-link' component={GenerateLink}></Route>
 							<Route exact path='/edituser/:user' component={EditUser}></Route>
 						</div>
@@ -89,8 +89,8 @@ class App extends React.Component {
 				((this.state.path === 'feedback') ? (
 						<Router>
 							<div>
-								<Route exact path='/feedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
-								<Route exact path='/feedback/:organization/:shortId' component={CreateFeedback} />
+								<Route exact path='/getfeedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
+								<Route exact path='/feedback/:shortId' component={CreateFeedback} />
 							</div>
 						</Router>
 					)

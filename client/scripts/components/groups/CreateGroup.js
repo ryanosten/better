@@ -7,7 +7,7 @@ class CreateGroup extends React.Component {
 		this.state = {
 			user: props.user._id,
 			name: '',
-			organization: "5a2211a94e475013a1386f09",
+			// organization: '5a62af54bb97240fa610c91b',
 			shortId: ''
 		};
 

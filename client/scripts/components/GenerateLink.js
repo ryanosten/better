@@ -22,7 +22,7 @@ class GenerateLink extends React.Component {
 		super(props);
 		this.state = {
 			user: props.user._id,
-			organization: 'hackeryou',
+			organization: 'gubagoo',
 			groupList: [],
 			selectedGroup: null,
 			link: '',
@@ -52,7 +52,7 @@ class GenerateLink extends React.Component {
 
 	genLink(e){
 		e.preventDefault();
-		const link = `better-feedback.herokuapp.com/feedback/${this.state.organization}/${this.state.selectedGroup.shortId}`
+		const link = `localhost:8080/feedback/${this.state.selectedGroup.shortId}`
 		this.setState({ link });
 		
 	}

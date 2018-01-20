@@ -66,7 +66,7 @@ app.get('/api/groups/:user',  routes.getGroups);
 app.get('/api/team/:user', routes.getTeam);
 app.get('/api/feedback/:feedbackId', routes.getFeedbackDetail);
 app.get('/api/comments/:feedbackId', routes.getComments);
-app.get('/feedback/:organization/:shortId', routes.anonymousFeedbackPage);
+app.get('/feedback/:shortId', routes.anonymousFeedbackPage);
 app.get('/api/user/:user', routes.getUser);
 
 
@@ -74,7 +74,7 @@ app.get('/api/user/:user', routes.getUser);
 // app.post('/api/feedback/create', requireLogin, routes.createFeedback);
 app.post('/api/groups/create', requireLogin, routes.createGroup)
 app.post('/api/comments/create/:feedbackId', routes.createComment);
-app.post('/api/feedback/create/:organization/:shortId', routes.postFeedback)
+app.post('/api/feedback/create/:shortId', routes.postFeedback)
 app.post('/api/users/invite', routes.inviteUser)
 
 
