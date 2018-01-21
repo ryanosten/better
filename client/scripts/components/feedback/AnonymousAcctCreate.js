@@ -48,7 +48,7 @@ class AnonymousAcctCreate extends React.Component {
           style={customStyles}
         >
           <button type="button" className="close" onClick={this.closeModal}><span>&times;</span></button>
-          <CreateUser isAnon='true' login='Anonymous username' />
+          <CreateUser isAnon='true' login='Anonymous username' refresh={this.props.refresh} signUpSuccess={this.props.signUpSuccess} />
         </Modal> 
 			</div>
 		)

@@ -21,10 +21,12 @@ class App extends React.Component {
 		user: null,
 		loggedIn: false,
 		path: window.location.pathname.substr(1,8),	
+		loginAlert: false
 		}	
 		this.login = this.login.bind(this);
 		this.refresh = this.refresh.bind(this);
 		this.logout = this.logout.bind(this);
+		this.signUpSuccess = this.signUpSuccess.bind(this)
 	}
 
 
@@ -57,10 +59,16 @@ class App extends React.Component {
 		})
 		.then((user) => {
 			if(user._id){
-				this.setState({user: user})
+				this.setState({
+					user: user
+				})
 				this.login();
 			} 
 		})
+	}
+
+	signUpSuccess() {
+		this.setState({ loginAlert: true })
 	}
 
 	componentDidMount() {
@@ -80,7 +88,7 @@ class App extends React.Component {
 							<Route exact path='/groups' render={(props) => <Groups user={this.state.user} {...props} />}/>
 							<Route exact path='/groups/create' render={(props) => <CreateGroup user={this.state.user} {...props} />}/>
 							<Route exact path='/getfeedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
-							<Route exact path='/feedback/:shortId' component={CreateFeedback} />
+							<Route exact path='/feedback/:shortId' render={(props) => <CreateFeedback user={this.state.user} loginAlert={this.state.loginAlert} signUpSuccess={this.signUpSuccess} {...props} />}/>
 							<Route exact path='/generate-link' component={GenerateLink}></Route>
 							<Route exact path='/edituser/:user' component={EditUser}></Route>
 						</div>
@@ -90,7 +98,7 @@ class App extends React.Component {
 						<Router>
 							<div>
 								<Route exact path='/getfeedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
-								<Route exact path='/feedback/:shortId' component={CreateFeedback} />
+								<Route exact path='/feedback/:shortId' render={(props) => <CreateFeedback refresh={this.refresh} user={this.state.user} loginAlert={this.state.loginAlert} signUpSuccess={this.signUpSuccess} {...props} />}/>
 							</div>
 						</Router>
 					)
@@ -103,7 +111,7 @@ class App extends React.Component {
 							</nav>
 							<div className="container">
 								<LoginUser refresh={this.refresh} login={this.login} />
-								<CreateUser refresh={this.refresh} />
+								<CreateUser refresh={this.refresh} loginAlert={this.state.loginAlert} signUpSuccess={this.signUpSuccess} />
 							</div>
 						</div>
 					)

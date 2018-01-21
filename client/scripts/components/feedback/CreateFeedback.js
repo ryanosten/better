@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Alert from 'react-s-alert';
 
 import AnonymousAcctCreate from './AnonymousAcctCreate'
 
@@ -42,18 +43,29 @@ class CreateFeedback extends React.Component {
 			})
 	}
 
+	componentDidMount() {
+		if(this.props.loginAlert) {
+			Alert.success('Account successfully created and logged in!', {
+            position: 'top-right',
+            effect: 'scale',
+            timeout: 3000
+        })
+		}
+	}
+
 	// <p>Create an <Link to={`/getfeedback/`}><a className="create-acct" href="">anonymous account</a></Link> to get management's responses to your feedback!</p>
 
 	render() {
 
 		return(
 			<div className="main-container col-sm-6">
+				{this.props.loginAlert && <Alert />}
 				<h4>Leave Some Feedback</h4>
 				<form className="form-group" onSubmit={this.handleSubmit}>
 					<textarea className="form-control fb-txt-area" type="text" onChange={this.handleChange} name="content" value={this.state.content} ></textarea>
 					<button className="btn btn-primary" type="submit">submit</button>
 				</form>
-				<AnonymousAcctCreate />
+				{this.props.user ? null : <AnonymousAcctCreate refresh={this.props.refresh} signUpSuccess={this.props.signUpSuccess} />}
 			</div>
 			
 		)

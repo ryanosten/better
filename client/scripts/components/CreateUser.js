@@ -37,7 +37,10 @@ class CreateUser extends React.Component {
 		.then((json) => {
 			console.log(json)
 			this.props.refresh();
-		});
+		})
+		.then(() => {
+			this.props.signUpSuccess();
+		})
 	}
 
 	render() {
