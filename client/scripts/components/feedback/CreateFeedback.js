@@ -53,8 +53,6 @@ class CreateFeedback extends React.Component {
 		}
 	}
 
-	// <p>Create an <Link to={`/getfeedback/`}><a className="create-acct" href="">anonymous account</a></Link> to get management's responses to your feedback!</p>
-
 	render() {
 
 		return(

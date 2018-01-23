@@ -35,6 +35,7 @@ app.post('/api/login', passport.authenticate('local'), (req, res) => {
 app.post('/api/signup', (req, res, next) => {
 	const newUser = new User ({
 		username: req.body.username,
+		role: req.body.role
 	});
 
 	User.register(newUser, req.body.password, (err, user) => {

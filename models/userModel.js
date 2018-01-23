@@ -8,7 +8,7 @@ const UserSchema = mongoose.Schema({
 	lastName: String,
 	username: String,
 	createdAt: Date,
-	admin: Boolean,
+	role: String,
 	groups: Array,
 });
 

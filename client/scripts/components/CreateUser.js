@@ -7,6 +7,7 @@ class CreateUser extends React.Component {
 		this.state = {
 			username: '',
 			password: '',
+			role: ''
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -43,16 +44,20 @@ class CreateUser extends React.Component {
 		})
 	}
 
+	componentDidMount() {
+		this.props.role == 'feedbacker' ? this.setState({ role: 'feedbacker'}) : null
+	}
+
 	render() {
 		return (
 			<div>
 				<form className="form-group create-acct-form" onSubmit={this.handleSubmit}>
 				<h4>Create Account</h4>
-				{this.props.isAnon == 'true' ? <p>Be sure to pick an anonymous username and remember your password. Because you are anonymous you have no way to reset your password!</p> : null }
+				{this.props.role == 'feedbacker' ? <p>Be sure to pick an anonymous username and remember your password. Because you are anonymous you have no way to reset your password!</p> : null }
 					<Field
-						type={this.props.isAnon == 'true' ? 'text' : 'email'}
+						type={this.props.role == 'feedbacker' ? 'text' : 'email'}
 						name="username"
-						placeholder={this.props.isAnon == 'true' ? this.props.login : 'email'}
+						placeholder={this.props.role == 'feedbacker' ? this.props.login : 'email'}
 						value={this.state.username}
 						onChange={this.handleChange}
 					/>
@@ -63,7 +68,7 @@ class CreateUser extends React.Component {
 						value={this.state.password}
 						onChange={this.handleChange}
 					/>
-					{this.props.isAnon !== 'true' ?
+					{this.props.role !== 'feedbacker' ?
 						<button className="btn btn-outline-success create-acct-btn">Create Account</button>
 
 						:

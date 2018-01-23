@@ -10,22 +10,34 @@ const Nav = ( { user, logout } ) => {
 			<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     		<span className="navbar-toggler-icon"></span>
   		</button>
-			<div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-				<ul className="navbar-nav">
-					<li className="nav-item">
-						<Link to={'/groups'} className="nav-link">Groups</Link>
-					</li>
-					<li className="nav-item">
-						<GenerateLink user={user} />
-					</li>
-					<li className="nav-item">
-						<Link to={'/team'} className="nav-link">Team</Link>
-					</li>
-					<li className="nav-item">
-							<a className="nav-link" onClick={logout}>Logout</a>
-					</li>
-				</ul>
-			</div>
+  		{user.role !== 'feedbacker' ?
+  			<div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+					<ul className="navbar-nav">
+						<li className="nav-item">
+							<Link to={'/groups'} className="nav-link">Groups</Link>
+						</li>
+						<li className="nav-item">
+							<GenerateLink user={user} />
+						</li>
+						<li className="nav-item">
+							<Link to={'/team'} className="nav-link">Team</Link>
+						</li>
+						<li className="nav-item">
+								<a className="nav-link" onClick={logout}>Logout</a>
+						</li>
+					</ul>
+				</div>
+				: 
+
+				<div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+					<ul className="navbar-nav">
+						<li className="nav-item">
+								<a className="nav-link" onClick={logout}>Logout</a>
+						</li>
+					</ul>
+				</div>
+  		}
+			
 		</nav>
 	)
 }

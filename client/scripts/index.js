@@ -45,6 +45,7 @@ class App extends React.Component {
 			this.setState({
 				loggedIn: false,
 				user: null,
+				loginAlert: false
 			});
 		});
 	}
