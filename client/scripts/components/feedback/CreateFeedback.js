@@ -12,7 +12,7 @@ class CreateFeedback extends React.Component {
 			content: '',
 			organization: this.props.match.params.organization,
 			shortId: this.props.match.params.shortId,
-			// author: '',
+			author: '5a6a8fa8a12aff3ac4d86df6',
 			createdAt: '',
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +27,7 @@ class CreateFeedback extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
+			
 			const feedbackItem = Object.assign({}, this.state);
 			feedbackItem.createdAt = Date.now(); 
 			
@@ -50,6 +51,9 @@ class CreateFeedback extends React.Component {
             effect: 'scale',
             timeout: 3000
         })
+		}
+		if(this.props.user) {
+			this.setState({ author: this.props.user._id })
 		}
 	}
 

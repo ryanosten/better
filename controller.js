@@ -16,8 +16,9 @@ routes.getUsers = (req, res) => {
 }
 
 routes.getAllFeedback = (req, res, next) => {
-	console.log(req.params)
-	Group.find({ 'users': { $in: [req.params.user]}})
+	console.log(req.body)
+	if(req.params.user.role == 'admin') {
+		Group.find({ 'users': { $in: [req.params.user]}})
 		.then((groups) => {
 			console.log(groups)
 			const user_groups = groups.map(item => item._id);
@@ -32,6 +33,10 @@ routes.getAllFeedback = (req, res, next) => {
 					res.status(400).send(err);
 				})
 		})
+	} else {
+		return
+	}
+	
 }
 
 routes.getGroups = (req, res, next) => {

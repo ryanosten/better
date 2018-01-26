@@ -27,6 +27,7 @@ app.use(passport.session());
 
 app.use(express.static('public'));
 
+
 //AUTH ROUTES
 app.post('/api/login', passport.authenticate('local'), (req, res) => {
 	res.send(req.user);
@@ -65,7 +66,7 @@ app.get('/api/me', (req,res) => {
 //APP GET ROUTES
 app.get('/api/users', routes.getUsers);
 app.get('/api/allfeedback/:user', routes.getAllFeedback);
-app.get('/api/groups/:user',  routes.getGroups);
+app.get('/api/groups/:user', routes.getGroups);
 app.get('/api/team/:user', routes.getTeam);
 app.get('/api/feedback/:feedbackId', routes.getFeedbackDetail);
 app.get('/api/comments/:feedbackId', routes.getComments);

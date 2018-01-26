@@ -9,10 +9,11 @@ const CommentSchema = new mongoose.Schema({
 });
 
 const FeedbackSchema = new mongoose.Schema({
-	// author: {
-	// 	type: mongoose.Schema.Types.ObjectId,
-	// 	ref: 'User'
-	// }, 
+	author: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: false
+	}, 
 	createdAt: Date, 
 	group: {
 		type: mongoose.Schema.Types.ObjectId,
