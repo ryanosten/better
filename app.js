@@ -7,6 +7,7 @@ const session = require('express-session');
 const routes = require('./controller')
 
 const User = require('./models/userModel.js');
+const Group = require('./models/groupModel.js');
 const requireLogin = require('./require_login')
 
 const app = express();
@@ -39,15 +40,22 @@ app.post('/api/signup', (req, res, next) => {
 		role: req.body.role
 	});
 
+	let userId = '';
+
 	User.register(newUser, req.body.password, (err, user) => {
 		if(err){
 			res.send(err)
 		} else {
+			userId = user._id;
 			req.logIn(user, (err) => {
 				res.send(user)
 			})
+			if(req.body.role == 'feedbacker') {
+				Group.findOneAndUpdate({ 'shortId': req.body.shortId }, {$push: {users: userId}})
+					.then(group => console.log(group))
+			}
 		}
-	});
+	})
 });
 
 app.get('/api/logout', (req, res) => {

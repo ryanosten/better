@@ -13,6 +13,7 @@ import CreateFeedback from './components/feedback/CreateFeedback';
 import GenerateLink from './components/GenerateLink';
 import Team from './components/team/Team';
 import EditUser from './components/team/EditUser';
+import AnonFeedbackSuccess from './components/feedback/AnonFeedbackSuccess';
 
 class App extends React.Component {
 	constructor() {
@@ -100,6 +101,7 @@ class App extends React.Component {
 							<div>
 								<Route exact path='/getfeedback/:feedbackId' render={(props) => <FeedbackDetail user={this.state.user} {...props} />}/>
 								<Route exact path='/feedback/:shortId' render={(props) => <CreateFeedback refresh={this.refresh} user={this.state.user} loginAlert={this.state.loginAlert} signUpSuccess={this.signUpSuccess} {...props} />}/>
+								<Route exact path='/feedbacksuccess' component={AnonFeedbackSuccess}></Route>
 							</div>
 						</Router>
 					)

@@ -16,27 +16,33 @@ routes.getUsers = (req, res) => {
 }
 
 routes.getAllFeedback = (req, res, next) => {
-	console.log(req.body)
-	if(req.params.user.role == 'admin') {
-		Group.find({ 'users': { $in: [req.params.user]}})
-		.then((groups) => {
-			console.log(groups)
-			const user_groups = groups.map(item => item._id);
-			return user_groups
-			})
-		.then((user_groups) => {
-			Feedback.find({ 'group': {$in: user_groups}}).populate('group').exec()
-				.then((docs) => {
-					res.status(200).send(docs);
-				})
-				.catch((err) => {
-					res.status(400).send(err);
-				})
+	User.findOne({ '_id': req.params.user })
+		.then(user => {
+			if(user.role == 'admin') {
+				Group.find({ 'users': { $in: [req.params.user]}})
+					.then((groups) => {
+						const user_groups = groups.map(item => item._id);
+						return user_groups
+						})
+					.then((user_groups) => {
+						Feedback.find({ 'group': {$in: user_groups}}).populate('group').exec()
+							.then((docs) => {
+								res.status(200).send(docs);
+							})
+							.catch((err) => {
+								res.status(400).send(err);
+							})
+					})
+			} else if(user.role == 'feedbacker') {
+					Feedback.find({ 'author': req.params.user }).populate('group').exec()
+						.then(docs => {
+							res.status(200).send(docs)
+						})
+						.catch(err => {
+							res.status(400).send(err);
+						})
+				}
 		})
-	} else {
-		return
-	}
-	
 }
 
 routes.getGroups = (req, res, next) => {
@@ -50,7 +56,7 @@ routes.getGroups = (req, res, next) => {
 }
 
 routes.getFeedbackDetail = (req, res, next) => {
-	Feedback.findOne({ '_id': req.params.feedbackId})
+	Feedback.findOne({ '_id': req.params.feedbackId })
 		.then((docs) => {
 			res.status(200).send(docs);
 		})

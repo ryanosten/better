@@ -2,12 +2,13 @@ import React from 'react';
 import Field from './Field';
 
 class CreateUser extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			username: '',
 			password: '',
-			role: ''
+			role: '',
+			shortId: this.props.shortId,
 		}
 
 		this.handleChange = this.handleChange.bind(this);

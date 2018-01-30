@@ -5,24 +5,28 @@ import CreateGroup from './groups/CreateGroup';
 import Nav from './Nav';
 import CreateUser from './CreateUser';
 import LoginUser from './LoginUser';
-// import Login from './Login';
+import queryString from 'query-string';
+import Alert from 'react-s-alert';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			user: props.user._id,
+			user: props.user,
 			groupList: [],
 			feedbackList:[],
 			selectedGroup: null,
+			showAlert: false,
+			feedbackGroup: null,
 		}
 		
 		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
 		this.filterFeedback = this.filterFeedback.bind(this);
 		this.initializeGroupList = this.initializeGroupList.bind(this);
 		this.updateSelectedGroup = this.updateSelectedGroup.bind(this);
-		// this.userLoggedIn = this.userLoggedIn.bind(this);
+		this.showAlert = this.showAlert.bind(this);
+		this.fetchGroups = this.fetchGroups.bind(this);
 
 	};
 
@@ -51,8 +55,38 @@ class Home extends React.Component {
 		return filteredFeedbackList;
 	}
 
-	
+	showAlert() {
+		this.setState( { showAlert: true });
+	}
 
+	componentWillMount() {
+	
+		const qString = queryString.parse(location.search);
+
+		if(qString.showAlert) {
+			console.log('changed state to true');
+			this.setState({ showAlert: true });
+		} 
+	}
+
+	componentDidMount() {
+		if(this.state.showAlert === true) {
+			console.log('show alert')
+			Alert.success('Feedback magic made!', {
+            position: 'top-right',
+            effect: 'scale',
+            timeout: 3000
+        })
+		}
+
+		this.fetchGroups();
+	}
+
+	fetchGroups() {
+		fetch(`/api/groups/${this.state.user._id}`)
+			.then(res => res.json())
+			.then(json => this.setState({ feedbackGroup: json[0] }) ) 
+	}
 
 	render() {
 
@@ -60,8 +94,17 @@ class Home extends React.Component {
 
 			return (
 				<div className="main-container">
-					<GroupSelect user={this.state.user} updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} />
-					<FeedbackList user={this.state.user} initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
+					<Alert />
+					<Link to={`/feedback/:${this.state.feedbackGroup}`}><button type="button" className="btn fb-btn">Leave Feedback</button></Link>
+					{
+						this.state.user.role == 'admin' ? 
+						
+						<GroupSelect user={this.state.user._id} updateSelectedGroup={this.updateSelectedGroup} initializeGroupList={this.initializeGroupList} groupList={this.state.groupList} selectedGroup={this.state.selectedGroup} /> 
+
+						: null
+					
+					}
+					<FeedbackList user={this.state.user._id} initializeFeedbackList={this.initializeFeedbackList} feedbackList={ feedback } />	
 				</div>
 			)
 	

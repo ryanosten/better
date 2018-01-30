@@ -3,7 +3,9 @@ import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Alert from 'react-s-alert';
 
-import AnonymousAcctCreate from './AnonymousAcctCreate'
+import AnonymousAcctCreate from './AnonymousAcctCreate';
+import AnonFeedbackSuccess from './AnonFeedbackSuccess';
+
 
 class CreateFeedback extends React.Component {
 	constructor(props) {
@@ -40,7 +42,11 @@ class CreateFeedback extends React.Component {
 			}).then(res => {
 				return res.json()
 			}).then(json => {		
-				this.props.history.push(`/getfeedback/${json._id}?showAlert=true`);
+				if(this.state.author == '5a6a8fa8a12aff3ac4d86df6') {
+					this.props.history.push(`/feedbacksuccess`)
+				} else {
+					this.props.history.push(`/?showAlert=true`);
+				}
 			})
 	}
 
@@ -67,7 +73,7 @@ class CreateFeedback extends React.Component {
 					<textarea className="form-control fb-txt-area" type="text" onChange={this.handleChange} name="content" value={this.state.content} ></textarea>
 					<button className="btn btn-primary" type="submit">submit</button>
 				</form>
-				{this.props.user ? null : <AnonymousAcctCreate refresh={this.props.refresh} signUpSuccess={this.props.signUpSuccess} />}
+				{this.props.user ? null : <AnonymousAcctCreate shortId={this.state.shortId} refresh={this.props.refresh} signUpSuccess={this.props.signUpSuccess} />}
 			</div>
 			
 		)

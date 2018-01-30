@@ -94,9 +94,22 @@ a:hover {
 	border-bottom: 1px solid lightgrey;
 }
 
+.fb-item:hover, .fb-anchor:hover {
+    cursor: pointer;
+}
+
 .fb-time {
 	position: absolute;
 	right: 0;
+}
+
+.anon-fb-success {
+    margin: 200px 100px;
+}
+
+.anon-fb-success h2,
+.anon-fb-success p {
+    text-align: center;
 }
 
 .gen-link-title {
@@ -126,6 +139,11 @@ a:hover {
 
 .fb-txt-area {
 	margin-bottom: 10px;
+}
+
+.fb-btn {
+    position: absolute;
+    right: 20px;
 }
 
 .comment-item {
