@@ -1,5 +1,5 @@
 import React from 'react';
-import InviteGroupSelect from './InviteGroupSelect'
+import MultiSelect from './MultiSelect';
 
 class InviteTeam extends React.Component {
 	
@@ -61,11 +61,7 @@ class InviteTeam extends React.Component {
 			  <div className="form-group mb-2">
 			    <input type="text" className="form-control" name="email" placeholder="email" onChange={this.handleChange} value={this.state.email}/>
 			  </div>
-			  <select className="custom-select mr-sm-2 invite-select" name="admin" id="inlineFormCustomSelect" onChange={this.handleChange} value={this.state.admin}>
-	        <option value="true">Admin</option>
-	        <option value="false">Member</option>
-	      </select>
-	      <InviteGroupSelect />
+			  <MultiSelect />
 	  		<button type="submit" className="btn btn-primary mb-2 invite-btn">Send Invite</button>
 			</form>
 		)

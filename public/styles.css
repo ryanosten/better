@@ -144,6 +144,14 @@ a:hover {
 .invite-btn {
   margin-left: 5px; }
 
+/* REACT-SELECT */
+.Select-control {
+  width: 100px;
+  margin-left: 15px;
+  position: relative;
+  bottom: 4px;
+  margin-right: 10px; }
+
 /* ALERTS */
 /* Common, default styles for the notification box */
 .s-alert-box,

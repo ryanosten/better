@@ -19,6 +19,7 @@ class FeedbackList extends React.Component {
 
 	componentDidMount() {
 		this.fetchFeedback();
+
 	}
 
 	handleFetchFeedback(feedbackList) {

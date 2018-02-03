@@ -1,6 +1,7 @@
 import React from 'react';
-// import InviteTeam from './InviteTeam';
+import InviteTeam from './InviteTeam';
 import TeamTable from './TeamTable';
+
 
 class Team extends React.Component {
 	constructor(props) {

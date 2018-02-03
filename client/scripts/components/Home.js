@@ -18,7 +18,7 @@ class Home extends React.Component {
 			feedbackList:[],
 			selectedGroup: null,
 			showAlert: false,
-			feedbackGroup: null,
+			feedbackGroup: {},
 		}
 		
 		this.initializeFeedbackList = this.initializeFeedbackList.bind(this);
@@ -67,6 +67,8 @@ class Home extends React.Component {
 			console.log('changed state to true');
 			this.setState({ showAlert: true });
 		} 
+
+		this.props.loginAlertDisable();
 	}
 
 	componentDidMount() {
@@ -95,7 +97,7 @@ class Home extends React.Component {
 			return (
 				<div className="main-container">
 					<Alert />
-					<Link to={`/feedback/:${this.state.feedbackGroup}`}><button type="button" className="btn fb-btn">Leave Feedback</button></Link>
+					<Link to={`/feedback/${this.state.feedbackGroup.shortId}`}><button type="button" className="btn fb-btn">Leave Feedback</button></Link>
 					{
 						this.state.user.role == 'admin' ? 
 						

@@ -28,6 +28,7 @@ class App extends React.Component {
 		this.refresh = this.refresh.bind(this);
 		this.logout = this.logout.bind(this);
 		this.signUpSuccess = this.signUpSuccess.bind(this)
+		this.loginAlertDisable = this.loginAlertDisable.bind(this)
 	}
 
 
@@ -73,6 +74,10 @@ class App extends React.Component {
 		this.setState({ loginAlert: true })
 	}
 
+	loginAlertDisable() {
+		this.setState({ loginAlert: false })
+	}
+
 	componentDidMount() {
 		this.refresh();
 	}
@@ -85,7 +90,7 @@ class App extends React.Component {
 					<Router>
 						<div>
 							<Nav user={this.state.user} logout={this.logout} />
-							<Route exact path='/' render={(props) => <Home user={this.state.user} {...props} />}/>
+							<Route exact path='/' render={(props) => <Home user={this.state.user} loginAlertDisable={this.loginAlertDisable} {...props} />}/>
 							<Route exact path='/team' render={(props) => <Team user={this.state.user} {...props} />}/>
 							<Route exact path='/groups' render={(props) => <Groups user={this.state.user} {...props} />}/>
 							<Route exact path='/groups/create' render={(props) => <CreateGroup user={this.state.user} {...props} />}/>
