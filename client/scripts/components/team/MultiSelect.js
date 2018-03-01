@@ -19,18 +19,26 @@ class MultiSelect extends React.Component {
   render() {
   	const { selectedOption } = this.state;
   	const value = selectedOption && selectedOption.value;
- 
+    
+    const selectGroups = this.props.groups.reduce((groups, item) => {
+      let groupItem = {
+        label: item.name,
+        value: item._id,
+      }
+
+      groups.push(groupItem)
+
+      return groups
+    
+    }, []);
+
     return (
       <Select
         name="form-field-name"
-        value={value}
-        multi
+        value={this.state.selectedOption}
+        multi={true}
         onChange={this.handleChange}
-        options={[
-          { value: 'admin', label: 'Admin' },
-          { value: 'manager', label: 'Manager' },
-          { value: 'feedbacker', label: 'Feedbacker' }
-        ]}
+        options={selectGroups}
       />
     );
   }

@@ -8,7 +8,8 @@ class Team extends React.Component {
 		super(props);
 		this.state = {
 			user: props.user._id,
-			teamList: []
+			teamList: [],
+			groups: [],
 		}
 		this.getTeam = this.getTeam.bind(this);
 	}
@@ -23,14 +24,25 @@ class Team extends React.Component {
 			})
 	}
 
+	getGroups(){
+		fetch(`/api/groups/${this.state.user}`)
+			.then(res => res.json())
+			.then(json => {
+				this.setState({
+					groups: json
+				})
+			})
+	}
+
 	componentDidMount() {
 		this.getTeam();
+		this.getGroups();
 	}
 
 	render() {
 		return (
 			<div>
-				<TeamTable teamList={this.state.teamList}/>
+				<TeamTable teamList={this.state.teamList} groups={this.state.groups}/>
 			</div>
 		)
 	}

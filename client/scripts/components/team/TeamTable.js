@@ -6,7 +6,7 @@ import InviteTeam from './InviteTeam';
 const TeamTable = (props) => {
 	return (
 		<div className='container team-table'>
-			<InviteTeam />
+			<InviteTeam groups={props.groups}/>
 			<table className="table">
 				<thead>
 					<tr>

@@ -9,7 +9,7 @@ class InviteTeam extends React.Component {
 			firstName: '',
 			lastName: '',
 			email: '',
-			admin: 'true'
+			admin: 'true',
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -61,7 +61,7 @@ class InviteTeam extends React.Component {
 			  <div className="form-group mb-2">
 			    <input type="text" className="form-control" name="email" placeholder="email" onChange={this.handleChange} value={this.state.email}/>
 			  </div>
-			  <MultiSelect />
+			  <MultiSelect groups={this.props.groups}/>
 	  		<button type="submit" className="btn btn-primary mb-2 invite-btn">Send Invite</button>
 			</form>
 		)
